@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- VERSION: Public Marketing v7 — FieldRules -->
+<!-- VERSION: Public Marketing v8 — FieldRules -->
 <!-- nav-mode: in-page -->
 <title>FieldRules — Turn your team's judgment calls into rules your AI can follow</title>
 <meta name="description" content="FieldRules turns your team's operational judgment into structured rules your AI can follow. The context and harness layer for AI-native SaaS.">
@@ -38,9 +38,9 @@
   --amber-500:#F59E0B;
   --green-500:#22C55E;
   --slate-300:#CBD5E1;
-  --slate-400:#94A3B8;
-  --slate-500:#64748B;
-  --slate-600:#475569;
+  --slate-400:#A8B8CC;
+  --slate-500:#7B8CA0;
+  --slate-600:#5C6B7F;
   /* CS leader color */
   --amber-cs:#F59E0B;
   --amber-cs-dim:rgba(245,158,11,.12);
@@ -51,7 +51,7 @@ section { scroll-margin-top: 56px; }
 body {
   font-family:var(--font-sans);
   background:#070714;
-  color:#E8EAF2;
+  color:#EDF0F7;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
@@ -103,6 +103,32 @@ nav {
   transition:background .2s,transform .15s;
 }
 .nav-cta:hover{background:var(--indigo-400);transform:translateY(-1px)}
+/* ── Mobile hamburger ── */
+.hamburger {
+  display:none;
+  background:none;border:none;cursor:pointer;padding:8px;
+  flex-direction:column;gap:5px;margin-left:auto;
+}
+.hamburger span {
+  display:block;width:22px;height:2px;background:#fff;border-radius:2px;
+  transition:transform .25s ease,opacity .2s ease;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-links{
+    display:none;position:fixed;top:56px;left:0;right:0;
+    flex-direction:column;background:rgba(7,7,20,.97);
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+    padding:16px 24px;gap:4px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:15px;padding:12px 16px;border-radius:8px}
+  .nav-cta{display:none}
+}
 /* ── Ghost engine demo chips ── */
 .dc-chip {
   font-family:var(--font-sans);font-size:12px;font-weight:500;
@@ -126,11 +152,15 @@ nav {
   100% { background:rgba(71,82,245,.18); border-color:rgba(71,82,245,.4); }
 }
 /* Demo step transitions — default hidden, only active visible */
-.demo-step { opacity:0; pointer-events:none; transition:opacity .25s ease; }
-.demo-step--active { opacity:1 !important; pointer-events:auto !important; }
+.demo-step { opacity:0; pointer-events:none; transition:opacity .4s ease, transform .4s ease; transform:translateY(8px); }
+.demo-step--active { opacity:1 !important; pointer-events:auto !important; transform:translateY(0) !important; }
 /* Demo body responsive height — override inline 500px */
 .demo-body { height:440px !important; }
 @media(max-width:768px){ .demo-body { height:500px !important; } }
+/* ── Rule library mockup interactive styles ── */
+.lib-tab:hover:not(.lib-tab--active) { background:rgba(255,255,255,.08) !important; color:var(--slate-300) !important; }
+.lib-filter:hover:not(.lib-filter--active) { background:rgba(255,255,255,.06) !important; color:var(--slate-300) !important; }
+#research-toggle:hover { background:rgba(71,82,245,.16); border-color:rgba(71,82,245,.35); }
 @media(max-width:480px){ .demo-body { height:580px !important; } }
 section { padding:96px 24px; }
 .inner { max-width:1120px;margin:0 auto; }
@@ -195,6 +225,28 @@ section { padding:96px 24px; }
 @keyframes pulse {
   0%,100%{opacity:1;transform:scale(1)}
   50%{opacity:.5;transform:scale(.8)}
+}
+/* ── Ghost typing animation ── */
+@keyframes ghostType {
+  0%{width:0}
+  60%{width:100%}
+  100%{width:100%}
+}
+.ghost-type-wrapper {
+  overflow:hidden;white-space:nowrap;
+  display:inline-block;width:0;
+  animation:ghostType 4s ease-in-out infinite;
+  font-size:12px;color:#D4D8F0;line-height:1.5;
+}
+@keyframes blink {
+  0%,100%{opacity:1}
+  50%{opacity:0}
+}
+.ghost-cursor {
+  display:inline-block;width:1px;height:14px;
+  background:var(--indigo-300);margin-left:2px;
+  vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
 }
 .hero h1 {
   font-family:var(--font-serif);
@@ -402,7 +454,7 @@ section { padding:96px 24px; }
 .ct-cell-them strong { color:var(--slate-400); }
 .ct-cell-us strong { color:var(--teal-300); }
 /* ── How It Works ── */
-.how-section { background:#09091A; }
+.how-section { background:linear-gradient(180deg, #09091A 0%, #0D0E2A 50%, #09091A 100%); }
 .steps {
   display:grid;grid-template-columns:repeat(3,1fr);
   gap:32px;margin-top:64px;position:relative;
@@ -440,10 +492,23 @@ section { padding:96px 24px; }
   margin-top:64px;
   position:relative;
 }
+/* ── Layer flow diagram — shared label style ── */
+.layer-flow-label {
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:20px;display:flex;align-items:center;gap:10px;
+}
+.layer-flow-label::before {
+  content:'';width:24px;height:1px;opacity:.5;flex-shrink:0;
+}
+.layer-flow-label--without { color:var(--rose-500); }
+.layer-flow-label--without::before { background:var(--rose-500); }
+.layer-flow-label--with { color:var(--teal-300); }
+.layer-flow-label--with::before { background:var(--teal-300); }
 .layer-flow {
   display:grid;
   grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
-  align-items:center;
+  align-items:stretch;
   gap:0;
   max-width:960px;
   margin:0 auto 56px;
@@ -453,6 +518,7 @@ section { padding:96px 24px; }
   padding:20px 24px;
   border-radius:12px;
   text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .lf-box-label {
   font-family:var(--font-mono);font-size:9px;font-weight:600;
@@ -468,6 +534,7 @@ section { padding:96px 24px; }
   font-size:20px;
   text-align:center;
   padding:0 4px;
+  display:flex;align-items:center;justify-content:center;
 }
 @media(max-width:900px){.lf-arrow{transform:rotate(90deg);font-size:16px}}
 /* Theirs: missing layer */
@@ -478,7 +545,7 @@ section { padding:96px 24px; }
   background:rgba(244,63,94,.04);
   border:1px dashed rgba(244,63,94,.25);
   text-align:center;
-  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .lf-missing .lf-box-label { color:rgba(244,63,94,.5); }
 .lf-missing .lf-box-name { color:rgba(244,63,94,.6);font-style:italic;font-size:14px; }
@@ -492,19 +559,10 @@ section { padding:96px 24px; }
   max-width:960px;
   margin-left:auto;margin-right:auto;
 }
-.layer-with-label {
-  font-family:var(--font-mono);font-size:10px;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  color:var(--teal-300);margin-bottom:20px;
-  display:flex;align-items:center;gap:10px;
-}
-.layer-with-label::before {
-  content:'';width:24px;height:1px;background:var(--teal-300);opacity:.5;
-}
 .layer-populated {
   display:grid;
   grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
-  align-items:center;
+  align-items:stretch;
   gap:0;
 }
 @media(max-width:900px){.layer-populated{grid-template-columns:1fr;gap:8px}}
@@ -513,11 +571,11 @@ section { padding:96px 24px; }
   border:1px solid rgba(71,82,245,.25);
   padding:20px 24px;border-radius:12px;
   text-align:center;
-  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .lf-filled .lf-box-label { color:var(--indigo-400); }
 .lf-filled .lf-box-name { color:#fff; }
-.lf-filled-arrow { color:rgba(71,82,245,.4);font-size:20px;text-align:center;padding:0 4px; }
+.lf-filled-arrow { color:rgba(71,82,245,.4);font-size:20px;text-align:center;padding:0 4px;display:flex;align-items:center;justify-content:center; }
 @media(max-width:900px){.lf-filled-arrow{transform:rotate(90deg);font-size:16px}}
 .lf-filled-prod { background:#0E0E20;border:1px solid rgba(71,82,245,.15); }
 .lf-filled-prod .lf-box-label { color:var(--indigo-400); }
@@ -667,7 +725,7 @@ section { padding:96px 24px; }
   color:var(--slate-600);letter-spacing:.04em;
 }
 /* ── CTA ── */
-.cta-section { background:#0D0D22;padding:120px 24px; }
+.cta-section { background:#0D0D22;background-image:radial-gradient(ellipse 60% 50% at 50% 60%, rgba(71,82,245,.12) 0%, transparent 70%);padding:120px 24px; }
 .cta-h2 {
   font-family:var(--font-serif);
   font-size:clamp(36px,6vw,64px);
@@ -698,7 +756,7 @@ footer {
 .footer-logo { font-family:var(--font-serif);font-size:18px;font-weight:300;font-style:italic;color:#fff; }
 .footer-mono { font-family:var(--font-mono);font-size:11px;color:var(--slate-600);letter-spacing:.04em; }
 /* ── Research section ── */
-.research-section { background:#060612; }
+.research-section { background:linear-gradient(180deg, #060612 0%, #071218 50%, #060612 100%); }
 .research-grid {
   display:grid;grid-template-columns:1fr 1fr;
   gap:16px;margin-top:56px;
@@ -858,6 +916,7 @@ footer {
     <li><a href="#research">Research</a></li>
     <li><a href="#who">Who It's For</a></li>
   </ul>
+  <button class="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
   <button class="nav-cta" type="button">Request access</button>
 </nav>
 <!-- HERO -->
@@ -869,7 +928,7 @@ footer {
     Every AI decision your product makes<br>will run on <em>someone's logic.</em><br>Make sure it's yours.
   </h1>
   <p class="hero-sub" data-reveal>
-    FieldRules makes your team's operational expertise visible, credited, and central to every AI decision your product makes — structured as attributed rules, routed into every AI surface that's supposed to act on them.
+    Your team's best people make judgment calls every day that shape how your product actually works. FieldRules captures that expertise — the rationale, the instinct, the hard-earned wisdom — and structures it so every AI decision your product makes is governed by the people who know best.
   </p>
   <div class="hero-actions" data-reveal>
     <button class="btn-primary" type="button">Request early access</button>
@@ -923,20 +982,20 @@ footer {
 </section>
 <section class="problem-section" id="problem">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Problem</div>
+    <div class="section-eyebrow" data-reveal>🚨 The Problem</div>
     <div class="problem-grid">
       <div>
         <div class="problem-quote" data-reveal>
           <div class="pq-text">"We're deploying AI across the product. I have no idea what logic it's applying to real decisions — or whose it is."</div>
-          <div class="pq-credit">CEO · Series B SaaS · Clinical operations</div>
+          <div class="pq-credit"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#8B5CF6);font-size:9px;font-weight:700;color:#fff;margin-right:6px;vertical-align:middle;">RK</span>CEO · Series B SaaS · Clinical operations</div>
         </div>
         <div class="problem-quote" data-reveal>
           <div class="pq-text">"My best practitioners are making judgment calls every day that shape how our product actually works. None of them get credit for it — and the AI has no idea it's happening."</div>
-          <div class="pq-credit">CEO · Series A HealthTech</div>
+          <div class="pq-credit"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#0EA5E9,#06B6D4);font-size:9px;font-weight:700;color:#fff;margin-right:6px;vertical-align:middle;">AN</span>CEO · Series A HealthTech</div>
         </div>
         <div class="problem-quote" data-reveal>
           <div class="pq-text">"Half our business logic is buried in conditionals an engineer wrote two years ago based on a Slack message from a domain expert who no longer works here. That's what our AI is being asked to replace."</div>
-          <div class="pq-credit">CTO · Series B SaaS · Revenue operations</div>
+          <div class="pq-credit"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#F59E0B,#EF4444);font-size:9px;font-weight:700;color:#fff;margin-right:6px;vertical-align:middle;">DW</span>CTO · Series B SaaS · Revenue operations</div>
         </div>
         <div class="problem-stat-grid" data-reveal>
           <div class="stat-card">
@@ -952,17 +1011,17 @@ footer {
       <div>
         <h3 class="problem-right-title" data-reveal>The people closest to your customers<br><em>know the rules.</em><br>Your AI doesn't — unless you capture them first.</h3>
         <p class="problem-body" data-reveal>
-          Every AI application in your product — routing, pricing, compliance, onboarding, escalations, exception handling — will make decisions based on conditional logic. If you haven't built the layer that supplies that logic, the model fills it in from training data. The model applies the industry average, not your specific way of working.
+          Every AI application in your product — routing, pricing, compliance, onboarding, escalations, exception handling — will make decisions based on conditional logic. <strong style="color:#fff;">If you haven't built the layer that supplies that logic, the model fills it in from training data.</strong> The model applies the industry average, not your specific way of working.
         </p>
         <p class="problem-body" data-reveal>
-          That logic exists already — applied by the practitioners who handle real-world edge cases every day. It's accumulated over years of exceptions, client commitments, and judgment calls that never made it into a spec. FieldRules gives it structure, attribution, and a permanent seat at the table — so the AI can't ship without it, and the people behind it get credit.
+          That logic exists already — applied by the practitioners who handle real-world edge cases every day. It's accumulated over years of exceptions, client commitments, and judgment calls that never made it into a spec. <strong style="color:#fff;">FieldRules gives it structure, attribution, and a permanent seat at the table</strong> — so the AI can't ship without it, and the people behind it get credit.
         </p>
         <div data-reveal>
-          <span class="problem-tag">AI runs on generic defaults</span>
-          <span class="problem-tag">Every AI surface is affected</span>
-          <span class="problem-tag">Rules drift without notice</span>
-          <span class="problem-tag">Exception layer never reaches the model</span>
-          <span class="problem-tag">Real rules are hardcoded — not structured</span>
+          <span class="problem-tag">⚡ AI runs on generic defaults</span>
+          <span class="problem-tag">🌐 Every AI surface is affected</span>
+          <span class="problem-tag">📉 Rules drift without notice</span>
+          <span class="problem-tag">🚫 Exception layer never reaches the model</span>
+          <span class="problem-tag">🔒 Real rules are hardcoded — not structured</span>
         </div>
       </div>
     </div>
@@ -971,7 +1030,7 @@ footer {
 <!-- NOT THAT -->
 <section class="how-section" id="how">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>How It Works</div>
+    <div class="section-eyebrow" data-reveal>⚙️ How It Works</div>
     <h2 class="section-h2" data-reveal>
       The rule surfaces<br><em>where the logic already lives.</em>
     </h2>
@@ -979,21 +1038,54 @@ footer {
     <div class="steps">
       <div class="step-card" data-reveal>
         <div class="step-n">01</div>
-        <div class="step-title">Logic surfaces</div>
+        <div class="step-title">🔍 Logic surfaces</div>
         <div class="step-body">A support ticket resolves with an implicit judgment call. A periodic review surfaces an undocumented pattern. FieldRules detects the IF/THEN/BECAUSE structure and drafts a candidate rule. The practitioner never has to start from scratch.</div>
         <div class="step-tag">Tickets · Periodic review · Slack</div>
       </div>
       <div class="step-card" data-reveal>
         <div class="step-n">02</div>
-        <div class="step-title">Domain expert confirms</div>
+        <div class="step-title">✅ Domain expert confirms</div>
         <div class="step-body">Jordan gets a structured card in Slack. She confirms, edits, or dismisses — one tap. The BECAUSE field is never pre-filled. Only her words go there. That's the part that makes it defensible.</div>
         <div class="step-tag">30 seconds · one decision</div>
       </div>
       <div class="step-card" data-reveal>
         <div class="step-n">03</div>
-        <div class="step-title">Rule enters the library. Product specs from it. AI runs on it.</div>
+        <div class="step-title">📚 Rule enters the library. Product specs from it. AI runs on it.</div>
         <div class="step-body">Structured, attributed, versioned. Alex specs from it. Engineers build from it. AI agents use it as a control layer — so product decisions reflect your operational reality, not a generic model's defaults.</div>
         <div class="step-tag">Library → product specs → AI control layer</div>
+      </div>
+    </div>
+    <!-- Visual flow: Ticket → Human → Product -->
+    <div style="margin-top:64px;max-width:800px;margin-left:auto;margin-right:auto;" data-reveal>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:0;">
+        <!-- Ticket -->
+        <div style="padding:20px;background:#111126;border:1px solid rgba(71,82,245,.15);border-radius:12px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:10px;">🎫</div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-500);margin-bottom:6px;">Live work</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Ticket resolves</div>
+          <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">Jira, Zendesk, Linear — wherever the judgment call happened</div>
+        </div>
+        <!-- Arrow -->
+        <div style="padding:0 8px;color:var(--indigo-400);font-size:24px;text-align:center;">→</div>
+        <!-- Human -->
+        <div style="padding:20px;background:rgba(71,82,245,.08);border:1px solid rgba(71,82,245,.25);border-radius:12px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:10px;">👩‍💼</div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:6px;">Domain expert</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Confirms in Slack</div>
+          <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">30 seconds. One tap. Their words, their reasoning, their name.</div>
+        </div>
+        <!-- Arrow -->
+        <div style="padding:0 8px;color:var(--teal-300);font-size:24px;text-align:center;">→</div>
+        <!-- Product -->
+        <div style="padding:20px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.2);border-radius:12px;text-align:center;">
+          <div style="font-size:24px;margin-bottom:10px;">⚡</div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-300);margin-bottom:6px;">AI layer</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px;">Rule goes live</div>
+          <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">Structured, versioned, attributed. AI queries it at inference time.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:16px;font-family:var(--font-mono);font-size:11px;color:var(--slate-500);letter-spacing:.04em;">
+        No documentation task. No wiki. No separate workflow. It happens inside the work itself.
       </div>
     </div>
   </div>
@@ -1010,34 +1102,34 @@ footer {
     </div>
 <section class="notthat-section" id="notthat">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>Not That</div>
+    <div class="section-eyebrow" data-reveal>📄 Not That</div>
     <h2 class="section-h2" data-reveal>
       Your documentation is<br><em>source material, not the answer.</em>
     </h2>
-    <p class="section-lede" data-reveal>FieldRules doesn't replace your documentation motion — it uses it. Your Confluence pages, call transcripts, Jira tickets, Slack threads: everything that already exists becomes source material for structuring the conditional logic that was implicit in all of it but never structured, attributed, or made defensible.</p>
+    <p class="section-lede" data-reveal>FieldRules doesn't replace your documentation motion — <strong style="color:#fff;">it uses it.</strong> Your Confluence pages, call transcripts, Jira tickets, Slack threads: everything that already exists becomes source material for structuring the conditional logic that was implicit in all of it but never structured, attributed, or made defensible.</p>
     <!-- Source → Extraction transformation -->
-    <div style="margin-top:48px;max-width:960px;" data-reveal>
+    <div style="margin-top:48px;max-width:960px;margin-left:auto;margin-right:auto;" data-reveal>
       <!-- Row: inputs -->
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-600);margin-bottom:14px;">What already exists — unstructured, implicit, not AI-ready</div>
       <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:0;">
         <div style="padding:14px 16px;background:#0A0A18;border:1px solid rgba(255,255,255,.06);border-radius:8px;">
-          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">Docs &amp; playbooks</div>
+          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">📄 Docs &amp; playbooks</div>
           <div style="font-size:11px;color:var(--slate-600);line-height:1.5;">Confluence, Notion — standard case documented, exceptions omitted</div>
         </div>
         <div style="padding:14px 16px;background:#0A0A18;border:1px solid rgba(255,255,255,.06);border-radius:8px;">
-          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">Call transcripts</div>
+          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">🎙️ Call transcripts</div>
           <div style="font-size:11px;color:var(--slate-600);line-height:1.5;">Gong, Chorus — judgment calls made live, reasoning never structured</div>
         </div>
         <div style="padding:14px 16px;background:#0A0A18;border:1px solid rgba(255,255,255,.06);border-radius:8px;">
-          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">Tickets &amp; issues</div>
+          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">🎫 Tickets &amp; issues</div>
           <div style="font-size:11px;color:var(--slate-600);line-height:1.5;">Jira, Linear, Zendesk — exceptions handled, BECAUSE never recorded</div>
         </div>
         <div style="padding:14px 16px;background:#0A0A18;border:1px solid rgba(255,255,255,.06);border-radius:8px;">
-          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">Slack threads</div>
+          <div style="font-size:12px;font-weight:600;color:var(--slate-400);margin-bottom:4px;">💬 Slack threads</div>
           <div style="font-size:11px;color:var(--slate-600);line-height:1.5;">Real-time decisions, edge case logic — implicit, ephemeral, unattributed</div>
         </div>
         <div style="padding:14px 16px;background:#0A0A18;border:1px solid rgba(244,63,94,.12);border-radius:8px;">
-          <div style="font-size:12px;font-weight:600;color:var(--rose-500);margin-bottom:4px;">Product code</div>
+          <div style="font-size:12px;font-weight:600;color:var(--rose-500);margin-bottom:4px;">⚙️ Product code</div>
           <div style="font-size:11px;color:var(--slate-600);line-height:1.5;">Hardcoded conditionals, routing logic, feature flags — rules already formalized, but locked in the codebase, unattributed, and invisible to the AI layer</div>
         </div>
       </div>
@@ -1055,27 +1147,27 @@ footer {
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
         <div style="padding:18px 20px;background:rgba(71,82,245,.06);border:1px solid rgba(71,82,245,.2);border-radius:8px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:8px;">Structured</div>
-          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">IF / THEN / BECAUSE</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">⚡ IF / THEN / BECAUSE</div>
           <div style="font-size:12px;color:var(--slate-400);line-height:1.55;">Conditional logic in a format your AI can consume, your PM can spec from, and your board can audit. Not prose. Not a wiki page.</div>
         </div>
         <div style="padding:18px 20px;background:rgba(71,82,245,.06);border:1px solid rgba(71,82,245,.2);border-radius:8px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:8px;">Vetted &amp; attributed</div>
-          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Practitioner-confirmed, never AI-invented</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">✋ Practitioner-confirmed, never AI-invented</div>
           <div style="font-size:12px;color:var(--slate-400);line-height:1.55;">The BECAUSE field is only ever the practitioner's words. Attribution is permanent. Every rule has a named source — not "the system" or "the model."</div>
         </div>
         <div style="padding:18px 20px;background:rgba(94,213,190,.05);border:1px solid rgba(94,213,190,.2);border-radius:8px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-300);margin-bottom:8px;">Stable &amp; non-stale</div>
-          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Versioned, conflict-detected, attributed</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">🔒 Versioned, conflict-detected, attributed</div>
           <div style="font-size:12px;color:var(--slate-400);line-height:1.55;">Every rule carries a confirmation date and author. New behavior that contradicts an existing rule surfaces for review. Every AI decision is pinned to the rule version that answered it.</div>
         </div>
       </div>
     </div>
-    <div style="margin-top:32px;max-width:960px;padding:24px 28px;background:#0D0D20;border:1px solid rgba(244,63,94,.18);border-radius:12px;border-left:3px solid var(--rose-500);" data-reveal>
+    <div style="margin-top:32px;max-width:960px;margin-left:auto;margin-right:auto;padding:24px 28px;background:#0D0D20;border:1px solid rgba(244,63,94,.18);border-radius:12px;border-left:3px solid var(--rose-500);" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-500);margin-bottom:10px;">A note on the codebase as source of truth</div>
-      <p style="font-size:15px;line-height:1.7;color:#D4D8F0;margin-bottom:12px;">Your conditionals encode real business rules. But the model doesn't read your codebase at inference time — it gets a context window. Even if it could read every <code style="font-family:var(--font-mono);font-size:13px;color:var(--indigo-300);background:rgba(71,82,245,.1);padding:1px 6px;border-radius:4px;">if/else</code>, it still wouldn't have what it needs: the <em>reasoning</em>.</p>
+      <p style="font-size:15px;line-height:1.7;color:#D4D8F0;margin-bottom:12px;">Your conditionals encode real business rules. <strong style="color:#fff;">But the model doesn't read your codebase at inference time</strong> — it gets a context window. Even if it could read every <code style="font-family:var(--font-mono);font-size:13px;color:var(--indigo-300);background:rgba(71,82,245,.1);padding:1px 6px;border-radius:4px;">if/else</code>, it still wouldn't have what it needs: the <em>reasoning</em>.</p>
       <p style="font-size:15px;line-height:1.7;color:#D4D8F0;">Conditionals are imperative. They handle the cases you anticipated. Your AI is deployed for the cases you didn't — which means it needs to generalize, which requires the BECAUSE. That reasoning was never in the code to begin with. Think of it as the difference between hardcoding your feature flags versus externalizing them into config. Same instinct, one layer up.</p>
     </div>
-    <div data-reveal style="margin-top:56px;border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;">
+    <div data-reveal style="margin-top:56px;max-width:960px;margin-left:auto;margin-right:auto;border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden;">
       <!-- Column headers -->
       <div style="display:grid;grid-template-columns:1fr 1fr;">
         <div style="padding:20px 28px;background:#111122;">
@@ -1132,10 +1224,350 @@ footer {
         </div>
       </div>
     </div>
+    <!-- Dark-themed Rule Library visual (inspired by SF-004 pilot prototype) -->
+    <div style="margin-top:64px;max-width:960px;margin-left:auto;margin-right:auto;" data-reveal>
+      <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+        <span style="width:20px;height:1px;background:var(--indigo-400);opacity:.5;display:inline-block;"></span>
+        What the rule library looks like
+      </div>
+      <div style="background:#0A0A1C;border:1px solid rgba(71,82,245,.2);border-radius:14px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5);">
+        <!-- App header bar -->
+        <div style="padding:14px 20px;background:#0D0D22;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px;">
+          <div style="width:26px;height:26px;background:var(--indigo-500);border-radius:5px;display:flex;align-items:center;justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div style="font-family:var(--font-serif);font-size:15px;font-weight:300;font-style:italic;color:#fff;">FieldRules</div>
+          <div id="lib-tabs" style="margin-left:auto;display:flex;gap:8px;">
+            <span class="lib-tab" data-tab="dashboard" style="font-size:10px;font-family:var(--font-mono);padding:4px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;color:var(--slate-500);cursor:pointer;transition:all .2s;">Dashboard</span>
+            <span class="lib-tab lib-tab--active" data-tab="library" style="font-size:10px;font-family:var(--font-mono);padding:4px 10px;background:rgba(71,82,245,.15);border:1px solid rgba(71,82,245,.25);border-radius:6px;color:var(--indigo-300);cursor:pointer;transition:all .2s;">Library</span>
+            <span class="lib-tab" data-tab="clusters" style="font-size:10px;font-family:var(--font-mono);padding:4px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;color:var(--slate-500);cursor:pointer;transition:all .2s;">Clusters</span>
+          </div>
+        </div>
+        <!-- ═══ DASHBOARD PANEL ═══ -->
+        <div id="lib-panel-dashboard" class="lib-panel" style="display:none;">
+          <!-- Stats row -->
+          <div style="padding:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+            <div style="padding:16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:10px;">
+              <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:8px;">Confirmed rules</div>
+              <div style="font-family:var(--font-serif);font-size:28px;font-weight:300;color:var(--teal-300);">47</div>
+              <div style="font-size:10px;color:var(--green-500);margin-top:4px;">↑ 12 this week</div>
+            </div>
+            <div style="padding:16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:10px;">
+              <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:8px;">Reasoning coverage</div>
+              <div style="font-family:var(--font-serif);font-size:28px;font-weight:300;color:var(--indigo-300);">94%</div>
+              <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">3 rules awaiting reasoning</div>
+            </div>
+            <div style="padding:16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:10px;">
+              <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:8px;">Active domains</div>
+              <div style="font-family:var(--font-serif);font-size:28px;font-weight:300;color:var(--amber-400);">6</div>
+              <div style="font-size:10px;color:var(--slate-500);margin-top:4px;">Onboarding · Escalation · Pricing…</div>
+            </div>
+            <div style="padding:16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:10px;">
+              <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:8px;">AI decisions governed</div>
+              <div style="font-family:var(--font-serif);font-size:28px;font-weight:300;color:#fff;">1,240</div>
+              <div style="font-size:10px;color:var(--green-500);margin-top:4px;">100% traceable to rule version</div>
+            </div>
+          </div>
+          <!-- Recent activity -->
+          <div style="padding:0 20px;">
+            <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:12px;">Recent activity</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="padding:12px 16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:8px;display:flex;align-items:center;gap:12px;">
+                <div style="width:6px;height:6px;border-radius:50%;background:var(--green-500);flex-shrink:0;"></div>
+                <span style="font-size:12px;color:#D4D8F0;flex:1;"><strong style="color:#fff;">Jordan Chen</strong> confirmed RULE-023 · Escalation</span>
+                <span style="font-size:10px;color:var(--slate-600);font-family:var(--font-mono);">2d ago</span>
+              </div>
+              <div style="padding:12px 16px;background:#111126;border:1px solid rgba(244,63,94,.1);border-radius:8px;display:flex;align-items:center;gap:12px;">
+                <div style="width:6px;height:6px;border-radius:50%;background:var(--rose-500);flex-shrink:0;"></div>
+                <span style="font-size:12px;color:#D4D8F0;flex:1;"><strong style="color:#fff;">Conflict detected</strong> RULE-011 ↔ RULE-023 · overlapping P0 triggers</span>
+                <span style="font-size:10px;color:var(--slate-600);font-family:var(--font-mono);">3d ago</span>
+              </div>
+              <div style="padding:12px 16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:8px;display:flex;align-items:center;gap:12px;">
+                <div style="width:6px;height:6px;border-radius:50%;background:var(--amber-400);flex-shrink:0;"></div>
+                <span style="font-size:12px;color:#D4D8F0;flex:1;"><strong style="color:#fff;">RULE-019</strong> flagged — missing reasoning from Alex Martinez</span>
+                <span style="font-size:10px;color:var(--slate-600);font-family:var(--font-mono);">5d ago</span>
+              </div>
+              <div style="padding:12px 16px;background:#111126;border:1px solid rgba(255,255,255,.06);border-radius:8px;display:flex;align-items:center;gap:12px;">
+                <div style="width:6px;height:6px;border-radius:50%;background:var(--indigo-400);flex-shrink:0;"></div>
+                <span style="font-size:12px;color:#D4D8F0;flex:1;"><strong style="color:#fff;">3 new candidate rules</strong> extracted from Zendesk tickets #4110–4112</span>
+                <span style="font-size:10px;color:var(--slate-600);font-family:var(--font-mono);">5d ago</span>
+              </div>
+            </div>
+          </div>
+          <!-- Domain coverage bar chart -->
+          <div style="padding:20px;">
+            <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:14px;">Rules by domain</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;color:var(--slate-400);min-width:80px;font-family:var(--font-mono);">Escalation</span>
+                <div style="flex:1;height:8px;background:#1E2238;border-radius:4px;overflow:hidden;"><div style="width:68%;height:100%;background:var(--indigo-400);border-radius:4px;"></div></div>
+                <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);min-width:20px;text-align:right;">14</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;color:var(--slate-400);min-width:80px;font-family:var(--font-mono);">Onboarding</span>
+                <div style="flex:1;height:8px;background:#1E2238;border-radius:4px;overflow:hidden;"><div style="width:51%;height:100%;background:var(--teal-300);border-radius:4px;"></div></div>
+                <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);min-width:20px;text-align:right;">11</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;color:var(--slate-400);min-width:80px;font-family:var(--font-mono);">Pricing</span>
+                <div style="flex:1;height:8px;background:#1E2238;border-radius:4px;overflow:hidden;"><div style="width:36%;height:100%;background:var(--amber-400);border-radius:4px;"></div></div>
+                <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);min-width:20px;text-align:right;">8</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;color:var(--slate-400);min-width:80px;font-family:var(--font-mono);">Renewal</span>
+                <div style="flex:1;height:8px;background:#1E2238;border-radius:4px;overflow:hidden;"><div style="width:28%;height:100%;background:var(--rose-400);border-radius:4px;"></div></div>
+                <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);min-width:20px;text-align:right;">6</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;color:var(--slate-400);min-width:80px;font-family:var(--font-mono);">Compliance</span>
+                <div style="flex:1;height:8px;background:#1E2238;border-radius:4px;overflow:hidden;"><div style="width:21%;height:100%;background:var(--green-500);border-radius:4px;"></div></div>
+                <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);min-width:20px;text-align:right;">5</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:10px;color:var(--slate-400);min-width:80px;font-family:var(--font-mono);">Exceptions</span>
+                <div style="flex:1;height:8px;background:#1E2238;border-radius:4px;overflow:hidden;"><div style="width:14%;height:100%;background:rgba(255,255,255,.2);border-radius:4px;"></div></div>
+                <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);min-width:20px;text-align:right;">3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ═══ LIBRARY PANEL ═══ -->
+        <div id="lib-panel-library" class="lib-panel">
+        <!-- Library toolbar -->
+        <div style="padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div style="font-size:13px;font-weight:600;color:#E0E4F0;">47 rules</div>
+          <div style="font-size:11px;color:var(--slate-600);margin-right:auto;">across 6 domains</div>
+          <div id="lib-filters" style="display:flex;gap:6px;">
+            <span class="lib-filter lib-filter--active" style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(94,213,190,.08);border:1px solid rgba(94,213,190,.15);border-radius:100px;color:var(--teal-300);cursor:pointer;transition:all .2s;">All</span>
+            <span class="lib-filter" style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-500);cursor:pointer;transition:all .2s;">Escalation</span>
+            <span class="lib-filter" style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-500);cursor:pointer;transition:all .2s;">Onboarding</span>
+            <span class="lib-filter" style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-500);cursor:pointer;transition:all .2s;">Pricing</span>
+            <span class="lib-filter" style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-500);cursor:pointer;transition:all .2s;">Renewal</span>
+          </div>
+        </div>
+        <!-- Section header: Escalation & SLA -->
+        <div style="padding:10px 20px;background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;font-weight:600;color:var(--slate-400);">Escalation &amp; SLA</span>
+          <span style="font-size:10px;color:var(--slate-600);font-family:var(--font-mono);">2 rules</span>
+        </div>
+        <!-- Rule card 1: Active, high confidence -->
+        <div style="margin:12px 20px;background:#111126;border:1px solid rgba(71,82,245,.15);border-left:3px solid var(--indigo-500);border-radius:10px;overflow:hidden;">
+          <div style="padding:16px 18px 12px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <span style="font-size:9px;font-family:var(--font-mono);color:var(--slate-600);text-transform:uppercase;letter-spacing:.04em;">RULE-023</span>
+                  <span style="font-size:8px;font-weight:600;padding:2px 8px;background:rgba(34,197,94,.1);color:var(--green-500);border:1px solid rgba(34,197,94,.18);border-radius:100px;">Active</span>
+                  <span style="font-size:8px;padding:2px 8px;background:rgba(255,255,255,.04);color:var(--slate-500);border:1px solid rgba(255,255,255,.06);border-radius:100px;">Escalation</span>
+                </div>
+                <div style="font-size:14px;font-weight:600;color:#E0E4F0;line-height:1.35;">P0 tickets escalate to VP Engineering when unassigned beyond SLA</div>
+              </div>
+              <div style="flex-shrink:0;text-align:center;">
+                <div style="width:44px;height:6px;background:#1E2238;border-radius:3px;overflow:hidden;">
+                  <div style="width:91%;height:100%;background:var(--green-500);border-radius:3px;"></div>
+                </div>
+                <div style="font-size:10px;font-weight:600;color:var(--green-500);margin-top:3px;">91%</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;gap:8px;align-items:flex-start;">
+                <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--amber-400);min-width:52px;padding-top:2px;">IF</span>
+                <span style="font-size:12px;color:#B8BDD4;line-height:1.5;border-left:2px solid rgba(251,191,36,.2);padding-left:10px;">ticket.priority = <strong style="color:#E0E4F0">P0</strong> AND assignee = <strong style="color:#E0E4F0">null</strong> AND age &gt; <strong style="color:#E0E4F0">30 min</strong></span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-start;">
+                <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--teal-300);min-width:52px;padding-top:2px;">THEN</span>
+                <span style="font-size:12px;color:#B8BDD4;line-height:1.5;border-left:2px solid rgba(94,213,190,.2);padding-left:10px;">Create escalation ticket in ENG project, post Slack alert to <strong style="color:#E0E4F0">#oncall-eng</strong></span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-start;background:rgba(71,82,245,.04);border:1px solid rgba(71,82,245,.1);border-radius:6px;padding:8px 10px;margin-top:2px;">
+                <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--indigo-400);min-width:52px;padding-top:2px;">BECAUSE</span>
+                <span style="font-size:12px;color:#9DA3C0;line-height:1.5;font-style:italic;">Unassigned P0s cause 3–4 hr delays in customer-facing incident response, directly impacting renewal conversations</span>
+              </div>
+            </div>
+          </div>
+          <div style="padding:8px 18px;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#4752F5,#6B74FF);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;">JC</div>
+              <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);">Jordan Chen · confirmed 2d ago</span>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:5px;color:var(--slate-500);cursor:pointer;">Edit</span>
+              <span style="font-size:9px;padding:3px 8px;background:rgba(71,82,245,.1);border:1px solid rgba(71,82,245,.2);border-radius:5px;color:var(--indigo-300);cursor:pointer;">View outputs</span>
+            </div>
+          </div>
+        </div>
+        <!-- Rule card 2: Conflict state -->
+        <div style="margin:0 20px 12px;background:#111126;border:1px solid rgba(244,63,94,.15);border-left:3px solid var(--rose-500);border-radius:10px;overflow:hidden;">
+          <div style="padding:16px 18px 12px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                  <span style="font-size:9px;font-family:var(--font-mono);color:var(--slate-600);text-transform:uppercase;letter-spacing:.04em;">RULE-011</span>
+                  <span style="font-size:8px;font-weight:600;padding:2px 8px;background:rgba(244,63,94,.1);color:var(--rose-500);border:1px solid rgba(244,63,94,.18);border-radius:100px;">Conflict</span>
+                  <span style="font-size:8px;padding:2px 8px;background:rgba(255,255,255,.04);color:var(--slate-500);border:1px solid rgba(255,255,255,.06);border-radius:100px;">SLA</span>
+                </div>
+                <div style="font-size:14px;font-weight:600;color:#E0E4F0;line-height:1.35;">SLA breach auto-creates CS ticket and notifies account manager</div>
+              </div>
+              <div style="flex-shrink:0;text-align:center;">
+                <div style="width:44px;height:6px;background:#1E2238;border-radius:3px;overflow:hidden;">
+                  <div style="width:88%;height:100%;background:var(--green-500);border-radius:3px;"></div>
+                </div>
+                <div style="font-size:10px;font-weight:600;color:var(--green-500);margin-top:3px;">88%</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;gap:8px;align-items:flex-start;">
+                <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--amber-400);min-width:52px;padding-top:2px;">IF</span>
+                <span style="font-size:12px;color:#B8BDD4;line-height:1.5;border-left:2px solid rgba(251,191,36,.2);padding-left:10px;">ticket.sla_status = <strong style="color:#E0E4F0">BREACHED</strong> AND account.tier = <strong style="color:#E0E4F0">Enterprise</strong></span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-start;">
+                <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--teal-300);min-width:52px;padding-top:2px;">THEN</span>
+                <span style="font-size:12px;color:#B8BDD4;line-height:1.5;border-left:2px solid rgba(94,213,190,.2);padding-left:10px;">Create CS ticket in CUST project, notify AM in <strong style="color:#E0E4F0">#account-alerts</strong></span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:flex-start;background:rgba(71,82,245,.04);border:1px solid rgba(71,82,245,.1);border-radius:6px;padding:8px 10px;margin-top:2px;">
+                <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--indigo-400);min-width:52px;padding-top:2px;">BECAUSE</span>
+                <span style="font-size:12px;color:#9DA3C0;line-height:1.5;font-style:italic;">Enterprise SLA breach without AM visibility risks silent churn — AMs need to get ahead of the conversation before the customer escalates</span>
+              </div>
+            </div>
+            <div style="margin-top:10px;padding:8px 12px;background:rgba(244,63,94,.06);border:1px solid rgba(244,63,94,.12);border-radius:6px;font-size:11px;color:var(--rose-400);line-height:1.5;">
+              ⚠️ <strong>Conflicts with RULE-023</strong> — Both rules fire on the same P0 Enterprise ticket. Suggested resolution: add <code style="font-family:var(--font-mono);font-size:10px;background:rgba(0,0,0,.2);padding:1px 4px;border-radius:2px;">AND escalation_created = false</code> to this IF clause.
+            </div>
+          </div>
+          <div style="padding:8px 18px;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#F43F5E,#FB7185);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;">SP</div>
+              <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);">Sam Park · confirmed 4d ago</span>
+            </div>
+            <span style="font-size:9px;padding:3px 8px;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.2);border-radius:5px;color:var(--rose-400);cursor:pointer;">Resolve conflict</span>
+          </div>
+        </div>
+        <!-- Section header: Knowledge Transfer -->
+        <div style="padding:10px 20px;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:11px;font-weight:600;color:var(--slate-400);">Knowledge Transfer &amp; Comms</span>
+          <span style="font-size:10px;color:var(--slate-600);font-family:var(--font-mono);">3 rules</span>
+        </div>
+        <!-- Rule card 3: Warning / needs review -->
+        <div style="margin:12px 20px;background:#111126;border:1px solid rgba(251,191,36,.12);border-left:3px solid var(--amber-400);border-radius:10px;overflow:hidden;">
+          <div style="padding:16px 18px 12px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span style="font-size:9px;font-family:var(--font-mono);color:var(--slate-600);text-transform:uppercase;letter-spacing:.04em;">RULE-019</span>
+              <span style="font-size:8px;font-weight:600;padding:2px 8px;background:rgba(251,191,36,.1);color:var(--amber-400);border:1px solid rgba(251,191,36,.18);border-radius:100px;">Needs Review</span>
+              <span style="font-size:8px;padding:2px 8px;background:rgba(255,255,255,.04);color:var(--slate-500);border:1px solid rgba(255,255,255,.06);border-radius:100px;">Feature Flags</span>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:#E0E4F0;line-height:1.35;margin-bottom:8px;">PM team notified 2 sprints before feature flag removal</div>
+            <div style="display:flex;gap:8px;align-items:flex-start;">
+              <span style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.08em;color:var(--indigo-400);min-width:52px;padding-top:2px;">BECAUSE</span>
+              <span style="font-size:12px;color:var(--amber-400);font-style:italic;line-height:1.5;border-left:2px solid rgba(251,191,36,.2);padding-left:10px;">[MISSING] — Awaiting reasoning from rule owner</span>
+            </div>
+          </div>
+          <div style="padding:8px 18px;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;gap:8px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,#0EA58D,#5ED5BE);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;">AM</div>
+              <span style="font-size:10px;color:var(--slate-500);font-family:var(--font-mono);">Alex Martinez · 5d ago</span>
+            </div>
+            <span style="font-size:9px;padding:3px 8px;background:rgba(71,82,245,.1);border:1px solid rgba(71,82,245,.2);border-radius:5px;color:var(--indigo-300);cursor:pointer;">Complete &amp; approve</span>
+          </div>
+        </div>
+        <!-- Fade-out hint -->
+        <div style="padding:6px 20px 16px;position:relative;">
+          <div style="padding:10px 16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:8px;display:flex;align-items:center;gap:8px;opacity:.5;">
+            <span style="font-size:9px;font-family:var(--font-mono);color:var(--slate-600);text-transform:uppercase;letter-spacing:.04em;">RULE-031</span>
+            <span style="font-size:12px;color:var(--slate-600);flex:1;">CS pain points from closed tickets surface in sprint retro…</span>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,#0A0A1C);pointer-events:none;"></div>
+        </div>
+        </div>
+        <!-- ═══ CLUSTERS PANEL ═══ -->
+        <div id="lib-panel-clusters" class="lib-panel" style="display:none;">
+          <div style="padding:20px;">
+            <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:14px;">Pattern clusters · auto-detected from rule library</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <!-- Cluster 1 -->
+              <div style="background:#111126;border:1px solid rgba(71,82,245,.15);border-radius:10px;padding:18px 20px;">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+                  <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                      <span style="font-size:9px;font-family:var(--font-mono);color:var(--indigo-300);text-transform:uppercase;letter-spacing:.06em;">CLUSTER-01</span>
+                      <span style="font-size:8px;font-weight:600;padding:2px 8px;background:rgba(71,82,245,.1);color:var(--indigo-300);border:1px solid rgba(71,82,245,.2);border-radius:100px;">7 rules</span>
+                    </div>
+                    <div style="font-size:15px;font-weight:600;color:#E0E4F0;line-height:1.35;">SLA-triggered escalation paths</div>
+                    <div style="font-size:12px;color:var(--slate-400);line-height:1.5;margin-top:6px;">Rules that fire when tickets breach SLA thresholds and route to different stakeholders based on account tier, ticket priority, and assignment state.</div>
+                  </div>
+                  <div style="flex-shrink:0;padding:8px 14px;background:rgba(71,82,245,.08);border:1px solid rgba(71,82,245,.15);border-radius:8px;text-align:center;">
+                    <div style="font-family:var(--font-serif);font-size:22px;font-weight:300;color:var(--indigo-300);">7</div>
+                    <div style="font-size:9px;color:var(--slate-500);font-family:var(--font-mono);">rules</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">RULE-023</span>
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">RULE-011</span>
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">RULE-008</span>
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">+4 more</span>
+                </div>
+                <div style="margin-top:10px;padding:8px 12px;background:rgba(244,63,94,.04);border:1px solid rgba(244,63,94,.1);border-radius:6px;font-size:11px;color:var(--rose-400);line-height:1.4;">
+                  ⚠️ 1 conflict detected · 2 rules share overlapping trigger conditions
+                </div>
+              </div>
+              <!-- Cluster 2 -->
+              <div style="background:#111126;border:1px solid rgba(94,213,190,.12);border-radius:10px;padding:18px 20px;">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+                  <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                      <span style="font-size:9px;font-family:var(--font-mono);color:var(--teal-300);text-transform:uppercase;letter-spacing:.06em;">CLUSTER-02</span>
+                      <span style="font-size:8px;font-weight:600;padding:2px 8px;background:rgba(94,213,190,.08);color:var(--teal-300);border:1px solid rgba(94,213,190,.15);border-radius:100px;">5 rules</span>
+                    </div>
+                    <div style="font-size:15px;font-weight:600;color:#E0E4F0;line-height:1.35;">New-site onboarding guardrails</div>
+                    <div style="font-size:12px;color:var(--slate-400);line-height:1.5;margin-top:6px;">Rules governing trial site onboarding pace — coordinator capacity, enrollment velocity, and specialist assignment triggers.</div>
+                  </div>
+                  <div style="flex-shrink:0;padding:8px 14px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:8px;text-align:center;">
+                    <div style="font-family:var(--font-serif);font-size:22px;font-weight:300;color:var(--teal-300);">5</div>
+                    <div style="font-size:9px;color:var(--slate-500);font-family:var(--font-mono);">rules</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">RULE-014</span>
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">RULE-015</span>
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">RULE-022</span>
+                  <span style="font-size:9px;padding:3px 8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:100px;color:var(--slate-400);font-family:var(--font-mono);">+2 more</span>
+                </div>
+              </div>
+              <!-- Cluster 3 -->
+              <div style="background:#111126;border:1px solid rgba(251,191,36,.1);border-radius:10px;padding:18px 20px;">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+                  <div>
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                      <span style="font-size:9px;font-family:var(--font-mono);color:var(--amber-400);text-transform:uppercase;letter-spacing:.06em;">CLUSTER-03</span>
+                      <span style="font-size:8px;font-weight:600;padding:2px 8px;background:rgba(251,191,36,.08);color:var(--amber-400);border:1px solid rgba(251,191,36,.15);border-radius:100px;">4 rules</span>
+                    </div>
+                    <div style="font-size:15px;font-weight:600;color:#E0E4F0;line-height:1.35;">Renewal pricing exceptions</div>
+                    <div style="font-size:12px;color:var(--slate-400);line-height:1.5;margin-top:6px;">Discount thresholds, exec approval gates, and NPS-gated auto-renewal logic.</div>
+                  </div>
+                  <div style="flex-shrink:0;padding:8px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.1);border-radius:8px;text-align:center;">
+                    <div style="font-family:var(--font-serif);font-size:22px;font-weight:300;color:var(--amber-400);">4</div>
+                    <div style="font-size:9px;color:var(--slate-500);font-family:var(--font-mono);">rules</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Faded hint -->
+              <div style="background:#111126;border:1px solid rgba(255,255,255,.04);border-radius:10px;padding:14px 20px;opacity:.4;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span style="font-size:9px;font-family:var(--font-mono);color:var(--slate-600);text-transform:uppercase;">CLUSTER-04</span>
+                  <span style="font-size:13px;color:var(--slate-600);">Cross-functional handoff triggers · 3 rules</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;text-align:center;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);">Rules shown are illustrative. Your library reflects your team's actual operational logic.</div>
+    </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <section class="how-section-deep" id="how-deep" style="scroll-margin-top: 56px;"><!-- GHOST ENGINE DEMO -->
-    <div style="margin-top:56px;max-width:960px;" data-reveal>
+  <div class="inner">
+    <div style="margin-top:56px;max-width:960px;margin-left:auto;margin-right:auto;" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--slate-600);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
         <span style="width:20px;height:1px;background:rgba(255,255,255,.12);display:inline-block;"></span>
         See the flow
@@ -1208,7 +1640,7 @@ footer {
               <!-- BECAUSE input — Fix 5: height:56px; overflow:hidden -->
               <div style="margin-bottom:12px;">
                 <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:6px;">Your BECAUSE</div>
-                <div class="slack-because-input" style="height:56px;overflow:hidden;background:#111318;border:1px solid rgba(165,174,255,.2);border-radius:6px;padding:10px 12px;font-size:12px;color:#D4D8F0;line-height:1.5;">Small sites go dark fast if they don't get personal attention early. Automation at this stage signals we don't care — and they notice.</div>
+                <div class="slack-because-input" style="height:56px;overflow:hidden;background:#111318;border:1px solid rgba(165,174,255,.2);border-radius:6px;padding:10px 12px;"><span class="ghost-type-wrapper">Small sites go dark fast if they don't get personal attention early. Automation at this stage signals we don't care — and they notice.</span><span class="ghost-cursor"></span></div>
               </div>
               <div style="display:flex;gap:8px;">
                 <button style="font-family:var(--font-sans);font-size:12px;font-weight:600;padding:6px 14px;background:var(--indigo-500);color:#fff;border:none;border-radius:6px;cursor:pointer;">✓ Confirm</button>
@@ -1251,16 +1683,24 @@ footer {
       </div><!-- /.demo-body -->
     </div><!-- /ghost engine demo -->
     <!-- PRE-SEEDED LIBRARY CALLOUT -->
-    <div style="margin-top:32px;max-width:760px;padding:20px 24px;background:rgba(94,213,190,.04);border:1px solid rgba(94,213,190,.15);border-radius:10px;display:flex;gap:20px;align-items:flex-start;" data-reveal>
+    <div style="margin-top:32px;max-width:760px;margin-left:auto;margin-right:auto;padding:20px 24px;background:rgba(94,213,190,.04);border:1px solid rgba(94,213,190,.15);border-radius:10px;display:flex;gap:20px;align-items:flex-start;" data-reveal>
       <div style="flex-shrink:0;width:32px;height:32px;border-radius:8px;background:rgba(94,213,190,.1);border:1px solid rgba(94,213,190,.2);display:flex;align-items:center;justify-content:center;font-size:15px;">📚</div>
       <div>
         <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-400);margin-bottom:6px;">You don't start from zero</div>
         <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Pre-seeded industry best practices library</div>
-        <div style="font-size:13px;color:var(--slate-400);line-height:1.65;">FieldRules ships with a curated starter library of operational best practices — organized by domain: onboarding, escalation, exception handling, pricing, compliance, and renewal. These are the industry defaults your team will confirm, override, or extend with your specific operational logic. Day one you have something. Week four, it reflects how your company actually works.</div>
+        <div style="font-size:13px;color:var(--slate-400);line-height:1.65;margin-bottom:16px;">FieldRules ships with a curated starter library of operational best practices — organized by domain. These are the industry defaults your team will confirm, override, or extend with your specific operational logic. Day one you have something. Week four, it reflects how your company actually works.</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+          <div style="padding:8px 12px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:6px;font-size:11px;color:var(--teal-300);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">🚀 Onboarding</div>
+          <div style="padding:8px 12px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:6px;font-size:11px;color:var(--teal-300);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">⚠️ Escalation</div>
+          <div style="padding:8px 12px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:6px;font-size:11px;color:var(--teal-300);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">🔀 Exception handling</div>
+          <div style="padding:8px 12px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:6px;font-size:11px;color:var(--teal-300);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">💰 Pricing</div>
+          <div style="padding:8px 12px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:6px;font-size:11px;color:var(--teal-300);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">📋 Compliance</div>
+          <div style="padding:8px 12px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.12);border-radius:6px;font-size:11px;color:var(--teal-300);font-family:var(--font-mono);display:flex;align-items:center;gap:6px;">🔄 Renewal</div>
+        </div>
       </div>
     </div>
     <!-- SLACK MOCKUP -->
-    <div style="margin-top:64px;max-width:680px;" data-reveal>
+    <div style="margin-top:64px;max-width:680px;margin-left:auto;margin-right:auto;" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--slate-600);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
         <span style="width:20px;height:1px;background:rgba(255,255,255,.12);display:inline-block;"></span>
         What Jordan actually sees
@@ -1329,10 +1769,10 @@ footer {
       </div>
     </div>
     <!-- AUTHORSHIP / OWNERSHIP BLOCK -->
-    <div style="margin-top:64px;max-width:960px;" data-reveal>
+    <div style="margin-top:64px;max-width:960px;margin-left:auto;margin-right:auto;" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:6px;">Rule ownership</div>
       <h3 style="font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);font-weight:300;line-height:1.2;letter-spacing:-.02em;color:#fff;margin-bottom:10px;">The person who knows best<br><em style="font-style:italic;color:var(--teal-300);">is the author — not the approver.</em></h3>
-      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:580px;margin-bottom:32px;">FieldRules doesn't route rules to a manager for sign-off. It routes them to the person whose judgment generated the rule in the first place. The BECAUSE field isn't a summary written by someone else. It's authored by the domain expert — in their words, on their authority.</p>
+      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:580px;margin-bottom:32px;">FieldRules doesn't route rules to a manager for sign-off. <strong style="color:#fff;">It routes them to the person whose judgment generated the rule in the first place.</strong> The BECAUSE field isn't a summary written by someone else. It's authored by the domain expert — in their words, on their authority.</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
         <div style="padding:20px 22px;background:#0A0A1C;border:1px solid rgba(71,82,245,.15);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">Who becomes owner</div>
@@ -1352,20 +1792,20 @@ footer {
       </div>
     </div>
     <!-- ELICITATION & BEHAVIORAL DESIGN — PUBLIC -->
-    <div style="margin-top:80px;max-width:960px;" data-reveal>
+    <div style="margin-top:80px;max-width:960px;margin-left:auto;margin-right:auto;" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-300);margin-bottom:6px;">The Elicitation Layer</div>
-      <h3 style="font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);font-weight:300;line-height:1.2;letter-spacing:-.02em;color:#fff;margin-bottom:10px;">A rule without a BECAUSE is a spec without judgment —<br><em style="font-style:italic;color:var(--teal-300);">executable, but not trustworthy.</em></h3>
-      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:620px;margin-bottom:32px;">The IF/THEN tells the AI what to do. The BECAUSE tells it why — which is what allows it to apply the rule correctly to novel situations the template didn't anticipate. Getting that reasoning out of a practitioner's head and into a structured format is a behavioral design problem, not a UI problem. FieldRules solves it with research-backed elicitation patterns that stay effective over hundreds of sessions.</p>
+      <h3 style="font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);font-weight:300;line-height:1.2;letter-spacing:-.02em;color:#fff;margin-bottom:10px;">Rules without reasoning are specs without judgment —<br><em style="font-style:italic;color:var(--teal-300);">executable, but not trustworthy.</em></h3>
+      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:620px;margin-bottom:32px;">The IF/THEN tells the AI what to do. The reasoning tells it <em>why</em> — which is what allows it to handle novel situations the template didn't anticipate. Getting that hard-earned instinct out of a practitioner's head and into a structured format is a behavioral design problem, not a UI problem. FieldRules solves it with research-backed elicitation that stays effective over hundreds of sessions.</p>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
         <div style="padding:28px 24px;background:#0A0A1C;border:1px solid rgba(94,213,190,.18);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-500);margin-bottom:10px;">The confabulation problem</div>
-          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;">Ask "why?" and you get a story — not the reasoning</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;">Ask "why?" and you get a story — not the real instinct</div>
           <div style="font-size:12px;color:var(--slate-400);line-height:1.65;margin-bottom:14px;">Nisbett &amp; Wilson (1977, cited 2,600+ times) established that humans have little direct introspective access to their own decision processes. When asked "why did you do that?", people don't introspect — they confabulate plausible post-hoc explanations. This is devastating for any knowledge structuring system that relies on direct "why" questions. It's also why documentation stales: the people writing it are generating explanations, not externalizing the actual mechanism they applied.</div>
           <div style="font-size:12px;color:var(--slate-500);font-family:var(--font-mono);font-style:italic;">"We always escalate those because they're important" — tautology, not reasoning</div>
         </div>
         <div style="padding:28px 24px;background:#0A0A1C;border:1px solid rgba(94,213,190,.18);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-300);margin-bottom:10px;">FieldRules' approach</div>
-          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;">Structured elicitation that routes around confabulation</div>
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;">Elicitation designed to surface real operational instinct</div>
           <div style="font-size:12px;color:var(--slate-400);line-height:1.65;margin-bottom:14px;">FieldRules uses <strong style="color:#E8EAF2;">contrastive prompts</strong> ("what would go wrong if this rule didn't exist?") instead of direct "why" questions. This forces reasoning from failure — which surfaces the actual mechanism. The prompt is <strong style="color:#E8EAF2;">anchored to the specific incident</strong> that triggered the rule, so it can't be answered with a template. And after the first draft, <strong style="color:#E8EAF2;">adaptive gap probing</strong> detects what's missing and asks one targeted follow-up.</div>
           <div style="font-size:12px;color:var(--slate-500);font-family:var(--font-mono);font-style:italic;">"Small sites go dark fast without personal attention — automation here signals we don't care" — real reasoning</div>
         </div>
@@ -1374,15 +1814,15 @@ footer {
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
         <div style="padding:20px 22px;background:rgba(71,82,245,.04);border:1px solid rgba(71,82,245,.15);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">Anti-habituation</div>
-          <div style="font-size:12px;color:var(--slate-400);line-height:1.65;">Every pattern is evaluated against: <em>does this become a shortcut the practitioner games by session 100?</em> Contrastive prompts are the primary defense — each incident surfaces a different failure mode. There is no template answer.</div>
+          <div style="font-size:12px;color:var(--slate-400);line-height:1.65;">Every elicitation pattern is evaluated against: <em>does this become a shortcut by session 100?</em> Each incident surfaces a different failure scenario, so there's no template answer. The goal is genuine reasoning, not compliance.</div>
         </div>
         <div style="padding:20px 22px;background:rgba(71,82,245,.04);border:1px solid rgba(71,82,245,.15);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">Never pre-filled</div>
-          <div style="font-size:12px;color:var(--slate-400);line-height:1.65;">The BECAUSE field is the one field no AI can generate. It is never pre-filled, never auto-completed, never implied to be human-authored when it isn't. A rule with no BECAUSE is a candidate — it cannot feed the AI layer. This constraint is permanent and architectural.</div>
+          <div style="font-size:12px;color:var(--slate-400);line-height:1.65;">The reasoning field is the one field no AI can generate. It's never pre-filled, never auto-completed, never implied to be human-authored when it isn't. A rule without reasoning is a candidate — it can't feed the AI layer. This constraint is permanent and architectural.</div>
         </div>
         <div style="padding:20px 22px;background:rgba(71,82,245,.04);border:1px solid rgba(71,82,245,.15);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">Process reward signal</div>
-          <div style="font-size:12px;color:var(--slate-400);line-height:1.65;">Lightman et al. (2023) showed that reasoning steps — not just answers — are what allow models to generalize. The BECAUSE field formalizes reasoning steps from human practitioners. It is, in effect, a process reward signal — structured as explicit rules rather than statistical preferences.</div>
+          <div style="font-size:12px;color:var(--slate-400);line-height:1.65;">Lightman et al. (2023) showed that reasoning steps — not just answers — are what allow models to generalize. FieldRules formalizes the reasoning behind every operational rule, directly from the practitioners who live it. In effect, it's a process reward signal — structured as explicit human wisdom rather than statistical preferences.</div>
         </div>
       </div>
       <!-- Contrastive prompt visual mockup -->
@@ -1412,27 +1852,25 @@ footer {
           </div>
         </div>
       </div>
-      <div style="padding:24px 28px;background:#0D0D20;border:1px solid rgba(71,82,245,.2);border-radius:12px;border-left:3px solid var(--indigo-500);max-width:760px;" data-reveal>
+      <div style="padding:24px 28px;background:#0D0D20;border:1px solid rgba(71,82,245,.2);border-radius:12px;border-left:3px solid var(--indigo-500);max-width:760px;margin-left:auto;margin-right:auto;" data-reveal>
         <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">The behavioral specification layer</div>
-        <p style="font-size:15px;line-height:1.7;color:#D4D8F0;">Fine-tuning changes how the model thinks. Guardrails block what the model says. <strong style="color:#fff;">FieldRules tells the model what to do — and why — based on human-confirmed operational rules.</strong> The rules are not weight modifications (not fine-tuning), not semantic retrieval (not RAG), not safety filters (not guardrails). They are structured, human-confirmed behavioral constraints applied dynamically at inference time. No commercial product currently occupies this category.</p>
+        <p style="font-size:15px;line-height:1.7;color:#D4D8F0;">Fine-tuning changes how the model thinks. Guardrails block what the model says. <strong style="color:#fff;">FieldRules tells the model what to do — and why — based on your team's confirmed operational wisdom.</strong> These aren't weight modifications, semantic retrieval, or safety filters. They're structured, human-confirmed behavioral rules applied dynamically at inference time — the operational instinct your best people carry, made legible to every AI surface in your product.</p>
       </div>
     </div>
+  </div>
   </div>
 </section>
 <section class="layer-section" id="layer">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Layer Between</div>
+    <div class="section-eyebrow" data-reveal>🏗️ The Layer Between</div>
     <h2 class="section-h2" data-reveal>
       The AI doesn't know<br><em>how your company works.</em>
     </h2>
-    <p class="section-lede" data-reveal>Between your product and the AI model, there's a layer that determines what context the AI receives, what constraints it operates under, and what reasoning it applies. Most companies haven't built it deliberately.</p>
+    <p class="section-lede" data-reveal>Between your product and the AI model, there's a layer that determines what context the AI receives, what constraints it operates under, and what reasoning it applies. <strong style="color:#fff;">Most companies haven't built it deliberately.</strong></p>
     <div class="layer-diagram" data-reveal>
       <!-- Without FieldRules -->
       <div style="margin-bottom:12px;">
-        <div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--rose-500);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
-          <span style="width:20px;height:1px;background:var(--rose-500);opacity:.5;display:inline-block;"></span>
-          Without deliberate design
-        </div>
+        <div class="layer-flow-label layer-flow-label--without">Without deliberate design</div>
         <div class="layer-flow">
           <div class="lf-box lf-product">
             <div class="lf-box-label">Your product</div>
@@ -1458,7 +1896,7 @@ footer {
       </div>
       <!-- With FieldRules -->
       <div class="layer-with">
-        <div class="layer-with-label">With FieldRules</div>
+        <div class="layer-flow-label layer-flow-label--with">With FieldRules</div>
         <div class="layer-populated">
           <div class="lf-box lf-filled lf-filled-prod">
             <div class="lf-box-label">Your product</div>
@@ -1485,32 +1923,99 @@ footer {
     <!-- Three components -->
     <div class="layer-components" data-reveal>
       <div class="lc-card">
-        <div class="lc-num lc-num-context">Context</div>
+        <div class="lc-num lc-num-context">🎯 Context</div>
         <div class="lc-title">What the AI knows about your situation</div>
         <div class="lc-body">Not just the current request — the rules and conditions your team applies that the model couldn't know from training. IF this client tier AND this stage, THEN the handling is different. The model doesn't know that. Your domain expert does.</div>
       </div>
       <div class="lc-card">
-        <div class="lc-num lc-num-constraints">Constraints</div>
+        <div class="lc-num lc-num-constraints">🛡️ Constraints</div>
         <div class="lc-title">What the AI is and isn't allowed to do</div>
         <div class="lc-body">Not generic safety guardrails — your specific policies. Some of these rules already exist: encoded in product conditionals, hardcoded by engineers who had to approximate the logic at ship time. But hardcoded isn't the same as structured. When a customer asks for an exception, what's allowed? When a compliance flag appears, what's the escalation path? A model without constraints will approximate. A model with a harness applies your rules — the real ones, not the ones your code was written to approximate.</div>
       </div>
       <div class="lc-card">
-        <div class="lc-num lc-num-reasoning">Reasoning</div>
+        <div class="lc-num lc-num-reasoning">🧠 Reasoning</div>
         <div class="lc-title">The BECAUSE behind the IF/THEN</div>
         <div class="lc-body">The part most implementations miss entirely. The constraint tells the AI what to do. The reasoning tells it why — which is what allows the AI to apply the rule correctly to novel situations that don't exactly match the template.</div>
       </div>
     </div>
-    <div style="margin-top:40px;max-width:760px;padding:24px 28px;background:#0D0D20;border:1px solid rgba(71,82,245,.2);border-radius:12px;border-left:3px solid var(--indigo-500);" data-reveal>
+    <div style="margin-top:40px;max-width:760px;margin-left:auto;margin-right:auto;padding:24px 28px;background:#0D0D20;border:1px solid rgba(71,82,245,.2);border-radius:12px;border-left:3px solid var(--indigo-500);" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">The claim</div>
-      <p style="font-size:15px;line-height:1.7;color:#D4D8F0;">FieldRules is the only product whose primary design intent is to give practitioners a structured, credited, permanent role in the context and harness layer — populated from real operational behavior — not from documents, not from engineering assumptions, and not from model training. The AI model is commodity infrastructure. The layer between your product and the model is where differentiation lives. As models improve, harness code shrinks — prompts get shorter, custom tools get replaced by native capabilities. The confirmed rule library doesn't compress. It compounds.</p>
+      <p style="font-size:15px;line-height:1.7;color:#D4D8F0;">FieldRules is the only product designed to give your practitioners a structured, credited, permanent role in the layer between your product and the AI model — populated from real operational behavior, not documents or engineering assumptions. The AI model is commodity infrastructure. <strong style="color:#fff;">The layer between your product and the model is where differentiation lives.</strong> As models improve, harness code shrinks. The confirmed rule library doesn't compress. It compounds — because your team's hard-earned wisdom compounds.</p>
+    </div>
+    <!-- STACK DIAGRAM: Where FieldRules lives -->
+    <div style="margin-top:64px;max-width:640px;margin-left:auto;margin-right:auto;" data-reveal>
+      <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-500);margin-bottom:20px;text-align:center;">Where FieldRules sits in your AI stack</div>
+      <div style="display:flex;flex-direction:column;gap:0;position:relative;">
+        <!-- Layer 1: Your Product -->
+        <div style="padding:22px 28px;background:#0D0D22;border:1px solid rgba(255,255,255,.08);border-radius:12px 12px 0 0;text-align:center;position:relative;z-index:1;">
+          <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-500);margin-bottom:6px;">🖥️ Your product</div>
+          <div style="font-family:var(--font-serif);font-size:16px;font-weight:300;color:var(--slate-400);">UI · APIs · Workflows · Integrations</div>
+        </div>
+        <!-- Connector -->
+        <div style="text-align:center;position:relative;z-index:2;margin:-1px 0;">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 16px;background:#070714;border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06);">
+            <span style="color:rgba(255,255,255,.15);font-size:12px;">↕</span>
+            <span style="font-family:var(--font-mono);font-size:8px;color:var(--slate-600);letter-spacing:.08em;">events · requests · triggers</span>
+            <span style="color:rgba(255,255,255,.15);font-size:12px;">↕</span>
+          </div>
+        </div>
+        <!-- Layer 2: FieldRules (highlighted) -->
+        <div style="padding:28px 32px;background:linear-gradient(135deg,rgba(71,82,245,.12),rgba(94,213,190,.08));border:2px solid rgba(71,82,245,.4);border-radius:0;text-align:center;position:relative;z-index:3;box-shadow:0 0 40px rgba(71,82,245,.12),inset 0 0 40px rgba(71,82,245,.04);">
+          <!-- Glow accent -->
+          <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:120px;height:3px;background:linear-gradient(90deg,transparent,var(--indigo-500),transparent);border-radius:0 0 4px 4px;"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-300);margin-bottom:8px;">🏗️ FieldRules — Context &amp; Harness Layer</div>
+          <div style="font-family:var(--font-serif);font-size:18px;font-weight:300;color:#fff;margin-bottom:14px;">Confirmed rules · Attribution · Reasoning · Versioning</div>
+          <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+            <span style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(71,82,245,.12);border:1px solid rgba(71,82,245,.25);border-radius:100px;color:var(--indigo-300);">IF / THEN / BECAUSE</span>
+            <span style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(94,213,190,.08);border:1px solid rgba(94,213,190,.2);border-radius:100px;color:var(--teal-300);">Practitioner-confirmed</span>
+            <span style="font-size:9px;font-family:var(--font-mono);padding:3px 10px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:100px;color:var(--amber-400);">Conflict detection</span>
+          </div>
+          <!-- Accent bottom -->
+          <div style="position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:120px;height:3px;background:linear-gradient(90deg,transparent,var(--teal-300),transparent);border-radius:4px 4px 0 0;"></div>
+        </div>
+        <!-- Connector -->
+        <div style="text-align:center;position:relative;z-index:2;margin:-1px 0;">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 16px;background:#070714;border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06);">
+            <span style="color:rgba(71,82,245,.4);font-size:12px;">↕</span>
+            <span style="font-family:var(--font-mono);font-size:8px;color:var(--slate-600);letter-spacing:.08em;">rules assembled at inference</span>
+            <span style="color:rgba(71,82,245,.4);font-size:12px;">↕</span>
+          </div>
+        </div>
+        <!-- Layer 3: AI Model -->
+        <div style="padding:22px 28px;background:#0D0D22;border:1px solid rgba(255,255,255,.08);text-align:center;position:relative;z-index:1;">
+          <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-500);margin-bottom:6px;">🤖 AI model</div>
+          <div style="font-family:var(--font-serif);font-size:16px;font-weight:300;color:var(--slate-400);">GPT-4 · Claude · Llama · Any LLM</div>
+          <div style="font-size:10px;color:var(--slate-600);margin-top:6px;font-family:var(--font-mono);">Commodity infrastructure — interchangeable</div>
+        </div>
+        <!-- Connector -->
+        <div style="text-align:center;position:relative;z-index:2;margin:-1px 0;">
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 16px;background:#070714;border-left:1px solid rgba(255,255,255,.06);border-right:1px solid rgba(255,255,255,.06);">
+            <span style="color:rgba(255,255,255,.15);font-size:12px;">↕</span>
+            <span style="font-family:var(--font-mono);font-size:8px;color:var(--slate-600);letter-spacing:.08em;">model weights · training data</span>
+            <span style="color:rgba(255,255,255,.15);font-size:12px;">↕</span>
+          </div>
+        </div>
+        <!-- Layer 4: Foundation -->
+        <div style="padding:22px 28px;background:#0A0A18;border:1px solid rgba(255,255,255,.05);border-radius:0 0 12px 12px;text-align:center;position:relative;z-index:1;">
+          <div style="font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-600);margin-bottom:6px;">☁️ Infrastructure</div>
+          <div style="font-family:var(--font-serif);font-size:16px;font-weight:300;color:var(--slate-600);">Compute · Hosting · Vector stores · Observability</div>
+        </div>
+        <!-- Side annotation -->
+        <div style="position:absolute;right:-180px;top:50%;transform:translateY(-50%);display:none;">
+          <!-- hidden on smaller screens, shown via media query if desired -->
+        </div>
+      </div>
+      <div style="margin-top:20px;text-align:center;font-size:12px;color:var(--slate-500);line-height:1.6;max-width:480px;margin-left:auto;margin-right:auto;">
+        The model is commodity. The infrastructure is commodity.<br><strong style="color:var(--indigo-300);">The layer between your product and the model is where your AI becomes yours.</strong>
+      </div>
     </div>
     <!-- LIBRARY → AI VISUALIZATION -->
-    <div style="margin-top:64px;" data-reveal>
+    <div style="margin-top:64px;max-width:1000px;margin-left:auto;margin-right:auto;" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-600);margin-bottom:20px;display:flex;align-items:center;gap:12px;">
         <span style="width:20px;height:1px;background:rgba(255,255,255,.1);display:inline-block;"></span>
         What the layer actually contains — and how it reaches the model
       </div>
-      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 180px;gap:0;align-items:stretch;max-width:1000px;">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 180px;gap:0;align-items:stretch;max-width:1000px;margin-left:auto;margin-right:auto;">
         <!-- Panel 1: Rule Library -->
         <div style="background:#08081A;border:1px solid rgba(71,82,245,.18);border-radius:12px 0 0 12px;padding:20px 20px 16px;border-right:none;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:14px;">Confirmed rule library</div>
@@ -1593,7 +2098,7 @@ footer {
           </div>
         </div>
       </div>
-      <div style="margin-top:12px;font-family:var(--font-mono);font-size:10px;color:var(--slate-600);letter-spacing:.04em;max-width:1000px;">
+      <div style="margin-top:12px;font-family:var(--font-mono);font-size:10px;color:var(--slate-600);letter-spacing:.04em;max-width:1000px;margin-left:auto;margin-right:auto;">
         The model never sees raw documentation. It sees confirmed, versioned, attributed operational rules — assembled at inference time from your library.
       </div>
     </div>
@@ -1602,14 +2107,14 @@ footer {
 <!-- CONTEXT & HARNESS: WHAT THE RESEARCH SHOWS -->
 <section class="research-section" id="research">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Research</div>
+    <div class="section-eyebrow" data-reveal>📚 The Research</div>
     <h2 class="section-h2" data-reveal>
       This isn't our opinion.<br><em>It's where software is going.</em>
     </h2>
     <p class="section-lede" data-reveal>The context and harness layer isn't a product category we invented. It's a structural shift that the ML research community has been documenting for five years. Here's what the literature actually shows.</p>
     <div class="research-grid" data-reveal>
       <div class="research-card">
-        <div class="rc-concept">Context window as execution environment</div>
+        <div class="rc-concept">💡 Context window as execution environment</div>
         <div class="rc-title">The context window is the new program</div>
         <div class="rc-body">Brown et al. (2020) established that large language models can perform novel tasks <strong>entirely from examples supplied in context</strong> — without weight updates, without fine-tuning. The implication: the context window is not memory. It is an execution environment. What you put in it is a first-class engineering decision. Agarwal et al. (2024) extended this further: in the many-shot regime — hundreds or thousands of examples in context — <strong>performance scales substantially across generative and discriminative tasks</strong>, making fine-tuning less essential and giving operators far greater control over model outputs than parameter updates alone.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">Brown et al. 2020 · Few-Shot Learners · NeurIPS</a>
@@ -1617,35 +2122,43 @@ footer {
         <a class="rc-cite" href="https://arxiv.org/abs/2507.13334" target="_blank" rel="noopener">Mei et al. 2025 · A Survey of Context Engineering · arXiv</a>
       </div>
       <div class="research-card">
-        <div class="rc-concept">Retrieval vs. fine-tuning for domain-specific knowledge</div>
+        <div class="rc-concept">🔍 Retrieval vs. fine-tuning for domain-specific knowledge</div>
         <div class="rc-title">LLMs struggle to learn new operational rules through fine-tuning. Retrieval wins — but only if the rules are structured.</div>
         <div class="rc-body">Ovadia et al. (2024) compared fine-tuning and retrieval-augmented generation (RAG) across knowledge-intensive tasks. <strong>RAG consistently outperforms fine-tuning for incorporating new and domain-specific knowledge</strong> — including knowledge encountered during training. Critically, LLMs struggle to learn new factual information from unsupervised fine-tuning at all. The implication is direct: your operational rules can't be baked into model weights reliably. They need to be supplied at inference — which means they need to be structured, retrievable, and correct before they enter the context.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2312.05934" target="_blank" rel="noopener">Ovadia et al. 2024 · Fine-Tuning or Retrieval? · EMNLP 2024</a>
       </div>
+    </div>
+    <!-- Collapsed research cards — expand on click -->
+    <div id="research-expanded" style="display:none;" data-reveal>
+      <div class="research-grid" style="margin-top:0;">
       <div class="research-card">
-        <div class="rc-concept">Process supervision & the BECAUSE field</div>
+        <div class="rc-concept">⚗️ Process supervision &amp; the BECAUSE field</div>
         <div class="rc-title">Reasoning steps — not just answers — are what allow models to generalize and self-correct</div>
         <div class="rc-body">Lightman et al. (2023) found that <strong>process supervision — providing feedback at each reasoning step — significantly outperforms outcome supervision</strong> for training models on complex problems. The finding extends directly to inference: a model supplied with the reasoning behind a rule can apply that rule to novel situations the rule didn't explicitly anticipate. A model supplied only with the IF/THEN cannot. This is the architectural case for the BECAUSE field — not a documentation preference, but a structural requirement for correct generalization.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2305.20050" target="_blank" rel="noopener">Lightman et al. 2023 · Let's Verify Step by Step · OpenAI</a>
       </div>
       <div class="research-card">
-        <div class="rc-concept">Context structure & position</div>
+        <div class="rc-concept">📐 Context structure &amp; position</div>
         <div class="rc-title">Where information sits in context affects whether the model uses it</div>
         <div class="rc-body">Liu et al. (2023) found that model performance degrades significantly based on <strong>where relevant information is positioned in the context window</strong> — even when that information is present. Information buried in the middle of long contexts is used less reliably than information at the edges. <strong>Structure is not cosmetic.</strong> How you organize the context layer — what comes first, what is foregrounded, what is attributed — has measurable effects on output quality.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener">Liu et al. 2023 · Lost in the Middle · TACL</a>
       </div>
       <div class="research-card">
-        <div class="rc-concept">The harness layer & Constitutional AI</div>
+        <div class="rc-concept">🛡️ The harness layer &amp; Constitutional AI</div>
         <div class="rc-title">Constraint systems layered over models outperform prompt-only behavioral control</div>
         <div class="rc-body">Bai et al. (2022) demonstrated that <strong>explicit constraint hierarchies applied at the harness layer</strong> produce more consistent, auditable model behavior than attempting to encode constraints in prompt instructions alone. The "constitutional" framing is precise: a set of principles the model is required to apply, with reasoning, before generating output. This is the research lineage behind the harness layer. Your operational policies belong in it — not approximated in a system prompt someone edited last quarter.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2212.08073" target="_blank" rel="noopener">Bai et al. 2022 · Constitutional AI · Anthropic</a>
       </div>
       <div class="research-card">
-        <div class="rc-concept">Context engineering for agents</div>
+        <div class="rc-concept">🤖 Context engineering for agents</div>
         <div class="rc-title">Structured, evolving context outperforms static prompts — and the gap compounds over time</div>
         <div class="rc-body">Zhang et al. (2025) introduced ACE (Agentic Context Engineering), treating context not as a static prompt but as <strong>an evolving playbook that accumulates, refines, and organizes operational knowledge</strong> through structured generation, reflection, and curation cycles. Agents using structured, incrementally-maintained context outperformed strong baselines by +10.6% on agent benchmarks and +8.6% on domain-specific tasks. The key finding: <strong>a smaller model with well-engineered, structured context can match or exceed a larger model without it.</strong> The context layer isn't a feature of your AI product. It is your AI product.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2510.04618" target="_blank" rel="noopener">Zhang et al. 2025 · Agentic Context Engineering (ACE) · arXiv Oct 2025</a>
       </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px;" data-reveal>
+      <button id="research-toggle" onclick="var ex=document.getElementById('research-expanded');var btn=this;if(ex.style.display==='none'){ex.style.display='block';btn.textContent='Show less ↑'}else{ex.style.display='none';btn.textContent='Show 4 more studies ↓'}" style="font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.04em;padding:10px 28px;background:rgba(71,82,245,.08);border:1px solid rgba(71,82,245,.2);border-radius:100px;color:var(--indigo-300);cursor:pointer;transition:all .2s;">Show 4 more studies ↓</button>
     </div>
     <div class="research-lead" data-reveal>
       <div class="research-lead-label">The throughline</div>
@@ -1657,7 +2170,7 @@ footer {
 <!-- WHO IT'S FOR -->
 <section class="who-section" id="who">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>Who It's For</div>
+    <div class="section-eyebrow" data-reveal>👥 Who It's For</div>
     <h2 class="section-h2" data-reveal>
       Four principals.<br><em>One layer.</em>
     </h2>
@@ -1667,7 +2180,7 @@ footer {
       <div class="buyer-card" data-reveal>
         <div class="buyer-card-accent accent-ceo"></div>
         <div class="buyer-avatar av-ceo">S</div>
-        <div class="buyer-role">CEO / Founder</div>
+        <div class="buyer-role">👔 CEO / Founder</div>
         <div class="buyer-name">Sam</div>
         <div class="buyer-voice">"We're about to automate. I don't know what logic we're encoding — or whose."</div>
         <ul class="buyer-needs">
@@ -1685,7 +2198,7 @@ footer {
       <div class="buyer-card" data-reveal>
         <div class="buyer-card-accent accent-product"></div>
         <div class="buyer-avatar av-product">A</div>
-        <div class="buyer-role">PM / Product</div>
+        <div class="buyer-role">📋 PM / Product</div>
         <div class="buyer-name">Alex</div>
         <div class="buyer-voice">"I'm building AI features on specs that don't reflect what your practitioners actually do. Every edge case is a surprise after we ship."</div>
         <ul class="buyer-needs">
@@ -1703,7 +2216,7 @@ footer {
       <div class="buyer-card" data-reveal>
         <div class="buyer-card-accent accent-cs"></div>
         <div class="buyer-avatar av-cs">J</div>
-        <div class="buyer-role">Domain Expert / Operations Lead</div>
+        <div class="buyer-role">🏆 Domain Expert / Operations Lead</div>
         <div class="buyer-name">Jordan</div>
         <div class="buyer-voice">"I've been handling these edge cases for three years. For the first time, someone is asking me to make that official — and putting my name on it."</div>
         <ul class="buyer-needs">
@@ -1721,7 +2234,7 @@ footer {
       <div class="buyer-card" data-reveal>
         <div class="buyer-card-accent accent-eng"></div>
         <div class="buyer-avatar av-eng">R</div>
-        <div class="buyer-role">Senior Engineer / Tech Lead</div>
+        <div class="buyer-role">⚙️ Senior Engineer / Tech Lead</div>
         <div class="buyer-name">Riley</div>
         <div class="buyer-voice">"I wrote those conditionals. I had to guess at half of them. Nobody's ever going to audit that code — but now the AI is going to run on top of it."</div>
         <ul class="buyer-needs">
@@ -1771,6 +2284,61 @@ footer {
   </div>
   <div class="loop-path" data-reveal>ticket → rule → library → product specs + AI control layer</div>
 </section>
+
+<!-- CONTINUOUS IMPROVEMENT LOOP -->
+<div style="padding:80px 24px;background:linear-gradient(180deg, #0D0D22 0%, #0A0F1A 50%, #0D0D22 100%);">
+  <div class="inner" style="max-width:960px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:48px;" data-reveal>
+      <div style="font-family:var(--font-mono);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-300);margin-bottom:16px;">Continuous improvement</div>
+      <h2 style="font-family:var(--font-serif);font-size:clamp(28px,4vw,42px);font-weight:300;line-height:1.15;letter-spacing:-.02em;color:#fff;margin-bottom:16px;">The library compounds.<br><em style="font-style:italic;color:var(--teal-300);">Every week it gets sharper.</em></h2>
+      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:560px;margin:0 auto;">As your team works, FieldRules captures more rules, detects more patterns, and surfaces more conflicts. <strong style="color:#fff;">The AI gets better because your team's expertise gets more structured</strong> — not because the model changed.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:860px;margin:0 auto;" data-reveal>
+      <div style="text-align:center;padding:24px 16px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.15);border-radius:12px;">
+        <div style="font-size:28px;margin-bottom:12px;">🔍</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Detect</div>
+        <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">Rules surface from live work — tickets, reviews, conversations</div>
+      </div>
+      <div style="text-align:center;padding:24px 16px;background:rgba(71,82,245,.06);border:1px solid rgba(71,82,245,.15);border-radius:12px;">
+        <div style="font-size:28px;margin-bottom:12px;">✅</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Confirm</div>
+        <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">Domain experts confirm, edit, or dismiss — with their reasoning</div>
+      </div>
+      <div style="text-align:center;padding:24px 16px;background:rgba(71,82,245,.06);border:1px solid rgba(71,82,245,.15);border-radius:12px;">
+        <div style="font-size:28px;margin-bottom:12px;">⚡</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Apply</div>
+        <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">AI agents query the library at inference time — every decision governed</div>
+      </div>
+      <div style="text-align:center;padding:24px 16px;background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.15);border-radius:12px;">
+        <div style="font-size:28px;margin-bottom:12px;">🔄</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:6px;">Learn</div>
+        <div style="font-size:11px;color:var(--slate-400);line-height:1.5;">Conflicts detected, rules versioned, coverage gaps flagged automatically</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px;font-family:var(--font-mono);font-size:11px;color:var(--slate-500);" data-reveal>
+      Detect → Confirm → Apply → Learn → Detect… the library never goes stale.
+    </div>
+    <!-- Elicitation science callout -->
+    <div style="margin-top:64px;max-width:860px;margin-left:auto;margin-right:auto;padding:32px 36px;background:linear-gradient(135deg,rgba(71,82,245,.08),rgba(94,213,190,.06));border:1px solid rgba(71,82,245,.18);border-radius:16px;" data-reveal>
+      <div style="display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start;">
+        <div style="width:56px;height:56px;background:rgba(71,82,245,.12);border:1px solid rgba(71,82,245,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;">🧠</div>
+        <div>
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:8px;">The elicitation layer</div>
+          <div style="font-family:var(--font-serif);font-size:22px;font-weight:300;line-height:1.3;color:#fff;margin-bottom:12px;">Confirmation quality is a <em style="color:var(--teal-300);">behavioral challenge</em> — so we treat it like one.</div>
+          <p style="font-size:14px;color:var(--slate-400);line-height:1.7;margin-bottom:16px;">The hardest part of a structured rule library isn't extraction — it's keeping practitioners engaged as they confirm rule after rule. <strong style="color:#D4D8F0;">Familiarity breeds shortcuts.</strong> If the confirmation surface stays static, reasoning quality degrades over time. That's not a product bug — it's a well-documented cognitive pattern.</p>
+          <p style="font-size:14px;color:var(--slate-400);line-height:1.7;margin-bottom:20px;">FieldRules treats this as a first-class design problem. Our elicitation layer is driven by <strong style="color:#D4D8F0;">continuous research loops in human behavioral science and HCI</strong> — contrastive framing, cognitive load calibration, anti-habituation patterns — because we recognize that keeping humans sharp alongside AI is a behavioral challenge that can be solved with passive ML, not just better UI.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <span style="font-size:10px;font-family:var(--font-mono);padding:4px 12px;background:rgba(94,213,190,.08);border:1px solid rgba(94,213,190,.15);border-radius:100px;color:var(--teal-300);">Contrastive prompts</span>
+            <span style="font-size:10px;font-family:var(--font-mono);padding:4px 12px;background:rgba(71,82,245,.08);border:1px solid rgba(71,82,245,.15);border-radius:100px;color:var(--indigo-300);">Anti-habituation</span>
+            <span style="font-size:10px;font-family:var(--font-mono);padding:4px 12px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.12);border-radius:100px;color:var(--amber-400);">Cognitive load calibration</span>
+            <span style="font-size:10px;font-family:var(--font-mono);padding:4px 12px;background:rgba(244,63,94,.06);border:1px solid rgba(244,63,94,.12);border-radius:100px;color:var(--rose-400);">Process reward modeling</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <div class="inner">
@@ -1793,7 +2361,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">FieldRules.</div>
-  <div class="footer-mono">v7 · Public Marketing Page · March 2026</div>
+  <div class="footer-mono">v8 · Public Marketing Page · March 2026</div>
   <div class="footer-mono">Your team's operational logic, structured for AI · Series A–B SaaS</div>
 </footer>
 <script>
@@ -1840,6 +2408,21 @@ try {
         if (target) target.classList.add('demo-step--active');
       });
     });
+    // ── Auto-play demo steps ──
+    var autoStep = 0;
+    var autoInterval = setInterval(function() {
+      autoStep = (autoStep + 1) % 4;
+      demoChips.forEach(function(c) { c.classList.remove('dc-chip--active'); });
+      demoSteps.forEach(function(s) { s.classList.remove('demo-step--active'); });
+      var chip = document.querySelector('#demo-chips .dc-chip[data-step="' + autoStep + '"]');
+      var step = document.querySelector('.demo-step[data-step="' + autoStep + '"]');
+      if (chip) chip.classList.add('dc-chip--active');
+      if (step) step.classList.add('demo-step--active');
+    }, 4000);
+    // Stop auto-play on manual interaction
+    demoChips.forEach(function(chip) {
+      chip.addEventListener('click', function() { clearInterval(autoInterval); });
+    });
     // ── Intercept all anchor href="#..." clicks ──
     document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       a.addEventListener('click', function(e) {
@@ -1851,7 +2434,7 @@ try {
     // ── Hero buttons ──
     var heroBtns = document.querySelectorAll('.hero-actions button');
     if (heroBtns[0]) heroBtns[0].addEventListener('click', function() { scrollTo('cta'); });
-    if (heroBtns[1]) heroBtns[1].addEventListener('click', function() { scrollTo('problem'); });
+    if (heroBtns[1]) heroBtns[1].addEventListener('click', function() { scrollTo('how'); });
     // ── Nav CTA + all other CTA buttons ──
     document.querySelectorAll('.nav-cta, .cta-section .btn-primary').forEach(function(btn) {
       btn.addEventListener('click', function() { scrollTo('cta'); });
@@ -1873,6 +2456,61 @@ try {
     }
     window.addEventListener('scroll', setActive, { passive: true });
     setActive();
+    // ── Hamburger menu ──
+    var hamburger = document.querySelector('.hamburger');
+    var navLinksEl = document.querySelector('.nav-links');
+    if (hamburger && navLinksEl) {
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('open');
+        navLinksEl.classList.toggle('open');
+      });
+      navLinksEl.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hamburger.classList.remove('open');
+          navLinksEl.classList.remove('open');
+        });
+      });
+    }
+    // ── Rule Library mockup interactivity ──
+    // Tab switching — shows/hides Dashboard, Library, Clusters panels
+    var libTabs = document.querySelectorAll('#lib-tabs .lib-tab');
+    var libPanels = document.querySelectorAll('.lib-panel');
+    libTabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var target = this.dataset.tab;
+        // Update tab visual state
+        libTabs.forEach(function(t) {
+          t.classList.remove('lib-tab--active');
+          t.style.background = 'rgba(255,255,255,.04)';
+          t.style.borderColor = 'rgba(255,255,255,.08)';
+          t.style.color = 'var(--slate-500)';
+        });
+        this.classList.add('lib-tab--active');
+        this.style.background = 'rgba(71,82,245,.15)';
+        this.style.borderColor = 'rgba(71,82,245,.25)';
+        this.style.color = 'var(--indigo-300)';
+        // Switch panels
+        libPanels.forEach(function(p) { p.style.display = 'none'; });
+        var panel = document.getElementById('lib-panel-' + target);
+        if (panel) panel.style.display = 'block';
+      });
+    });
+    // Domain filter chips
+    var libFilters = document.querySelectorAll('#lib-filters .lib-filter');
+    libFilters.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        libFilters.forEach(function(f) {
+          f.classList.remove('lib-filter--active');
+          f.style.background = 'rgba(255,255,255,.03)';
+          f.style.borderColor = 'rgba(255,255,255,.06)';
+          f.style.color = 'var(--slate-500)';
+        });
+        this.classList.add('lib-filter--active');
+        this.style.background = 'rgba(94,213,190,.08)';
+        this.style.borderColor = 'rgba(94,213,190,.15)';
+        this.style.color = 'var(--teal-300)';
+      });
+    });
     // ── Form submission via FormSubmit.co ──
     var ctaForm = document.getElementById('cta-form');
     if (ctaForm) {
