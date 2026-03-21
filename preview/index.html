@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- VERSION: Public Marketing v9.1 — FieldRules -->
+<!-- nav-mode: in-page -->
+<title>FieldRules — Turn your team's judgment calls into rules your AI can follow</title>
+<meta name="description" content="FieldRules turns your team's operational judgment into structured rules your AI can follow. The context and harness layer for AI-native SaaS.">
+<meta property="og:title" content="FieldRules — Turn your team's judgment calls into rules your AI can follow">
+<meta property="og:description" content="FieldRules turns your team's operational judgment into structured rules your AI can follow. The context and harness layer for AI-native SaaS.">
+<meta property="og:image" content="https://fieldrules.ai/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fieldrules.ai">
+<link rel="canonical" href="https://fieldrules.ai">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root {
+  --font-sans:'DM Sans',sans-serif;
+  --font-serif:'Fraunces',serif;
+  --font-mono:'DM Mono',monospace;
+  /* Palette */
+  --indigo-300:#A5AEFF;
+  --indigo-400:#818CF8;
+  --indigo-500:#4752F5;
+  --indigo-600:#3B45D6;
+  --indigo-700:#2D35A8;
+  --teal-300:#5ED5BE;
+  --teal-400:#3DC4AB;
+  --teal-500:#2AA896;
+  --teal-600:#1E8A7B;
+  --rose-500:#F43F5E;
+  --amber-400:#FBBF24;
+  --amber-500:#F59E0B;
+  --green-500:#22C55E;
+  --slate-300:#CBD5E1;
+  --slate-400:#A8B8CC;
+  --slate-500:#7B8CA0;
+  --slate-600:#5C6B7F;
+  /* CS leader color */
+  --amber-cs:#F59E0B;
+  --amber-cs-dim:rgba(245,158,11,.12);
+  --amber-cs-border:rgba(245,158,11,.25);
+}
+html { scroll-behavior:smooth; }
+section { scroll-margin-top: 56px; }
+body {
+  font-family:var(--font-sans);
+  background:#070714;
+  color:#EDF0F7;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+[data-reveal] {
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .55s ease, transform .55s ease;
+}
+[data-reveal].visible {
+  opacity:1;
+  transform:translateY(0);
+}
+/* ── Nav ── */
+nav {
+  position:fixed;top:0;left:0;right:0;
+  z-index:100;
+  display:flex;align-items:center;
+  padding:0 32px;height:56px;
+  background:rgba(7,7,20,.85);
+  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-logo {
+  font-family:var(--font-serif);
+  font-size:20px;font-weight:300;font-style:italic;
+  color:#fff;letter-spacing:-.02em;
+  text-decoration:none;
+}
+.nav-links {
+  display:flex;align-items:center;gap:4px;
+  margin-left:40px;list-style:none;
+}
+.nav-links a {
+  font-size:13px;font-weight:500;
+  color:var(--slate-400);
+  text-decoration:none;
+  padding:5px 12px;border-radius:6px;
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.08)}
+.nav-cta {
+  margin-left:auto;
+  font-size:13px;font-weight:600;
+  padding:8px 18px;
+  background:var(--indigo-500);color:#fff;
+  border:none;border-radius:6px;cursor:pointer;
+  transition:background .2s,transform .15s;
+}
+.nav-cta:hover{background:var(--indigo-400);transform:translateY(-1px)}
+/* ── Mobile hamburger ── */
+.hamburger {
+  display:none;
+  background:none;border:none;cursor:pointer;padding:8px;
+  flex-direction:column;gap:5px;margin-left:auto;
+}
+.hamburger span {
+  display:block;width:22px;height:2px;background:#fff;border-radius:2px;
+  transition:transform .25s ease,opacity .2s ease;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-links{
+    display:none;position:fixed;top:56px;left:0;right:0;
+    flex-direction:column;background:rgba(7,7,20,.97);
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+    padding:16px 24px;gap:4px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:15px;padding:12px 16px;border-radius:8px}
+  .nav-cta{display:none}
+}
+/* ── Ghost engine demo chips ── */
+.dc-chip {
+  font-family:var(--font-sans);font-size:12px;font-weight:500;
+  padding:5px 14px;border-radius:100px;cursor:pointer;
+  background:rgba(255,255,255,.04);
+  color:var(--slate-400);
+  border:1px solid rgba(255,255,255,.09);
+  transition:color .15s,background .15s,border-color .15s;
+}
+.dc-chip:hover { color:#fff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16); }
+.dc-chip--active {
+  color:#fff;background:rgba(71,82,245,.18);
+  border-color:rgba(71,82,245,.4);
+}
+/* Fix 3: transient tap-flash — applied then auto-removed by JS */
+.dc-chip-on {
+  animation:chipFlash .3s ease forwards;
+}
+@keyframes chipFlash {
+  0%   { background:rgba(71,82,245,.45); border-color:rgba(71,82,245,.7); }
+  100% { background:rgba(71,82,245,.18); border-color:rgba(71,82,245,.4); }
+}
+/* Demo step transitions — default hidden, only active visible */
+.demo-step { opacity:0; pointer-events:none; transition:opacity .4s ease, transform .4s ease; transform:translateY(8px); }
+.demo-step--active { opacity:1 !important; pointer-events:auto !important; transform:translateY(0) !important; }
+/* Demo body responsive height — override inline 500px */
+.demo-body { height:440px !important; }
+@media(max-width:768px){ .demo-body { height:500px !important; } }
+@media(max-width:480px){ .demo-body { height:580px !important; } }
+/* ── Auto-cycle progress bar ── */
+.dc-progress-wrap { display:flex;gap:6px;margin-top:10px; }
+.dc-progress-seg { flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;position:relative; }
+.dc-progress-fill { position:absolute;inset:0;background:var(--indigo-400);border-radius:2px;transform:scaleX(0);transform-origin:left; }
+.dc-progress-fill--active { animation:progFill 4s linear forwards; }
+.dc-progress-fill--done { transform:scaleX(1); }
+@keyframes progFill { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+section { padding:96px 24px; }
+.inner { max-width:1120px;margin:0 auto; }
+.section-eyebrow {
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--indigo-400);margin-bottom:16px;
+}
+.section-h2 {
+  font-family:var(--font-serif);
+  font-size:clamp(36px,5vw,56px);
+  font-weight:300;line-height:1.1;letter-spacing:-.03em;
+  color:#fff;margin-bottom:20px;
+}
+.section-h2 em { font-style:italic;color:var(--teal-300); }
+.section-lede {
+  font-size:17px;line-height:1.7;color:var(--slate-400);
+  max-width:600px;
+}
+/* ── Hero ── */
+.hero {
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  position:relative;overflow:hidden;
+}
+.hero-bg {
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(71,82,245,.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(14,165,141,.1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 100%, rgba(71,82,245,.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-grid {
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+  pointer-events:none;
+}
+.hero-eyebrow {
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-mono);font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--teal-300);
+  background:rgba(94,213,190,.08);
+  border:1px solid rgba(94,213,190,.2);
+  border-radius:100px;padding:6px 16px;
+  margin-bottom:32px;
+  position:relative;z-index:1;
+}
+.hero-eyebrow::before {
+  content:'';
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal-300);
+  animation:pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(.8)}
+}
+/* ── Ghost typing animation ── */
+@keyframes ghostType {
+  0%{width:0}
+  60%{width:100%}
+  100%{width:100%}
+}
+.ghost-type-wrapper {
+  overflow:hidden;white-space:nowrap;
+  display:inline-block;width:0;
+  animation:ghostType 4s ease-in-out infinite;
+  font-size:12px;color:#D4D8F0;line-height:1.5;
+}
+@keyframes blink {
+  0%,100%{opacity:1}
+  50%{opacity:0}
+}
+.ghost-cursor {
+  display:inline-block;width:1px;height:14px;
+  background:var(--indigo-300);margin-left:2px;
+  vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
+}
+.hero h1 {
+  font-family:var(--font-serif);
+  font-size:clamp(48px,7vw,84px);
+  font-weight:300;line-height:1.05;
+  letter-spacing:-.03em;color:#fff;
+  margin-bottom:24px;
+  position:relative;z-index:1;
+  max-width:900px;
+}
+.hero h1 em {
+  font-style:italic;
+  background:linear-gradient(135deg, var(--indigo-300), var(--teal-300));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;color:transparent;
+}
+.hero-sub {
+  font-size:18px;font-weight:400;line-height:1.6;
+  color:var(--slate-400);
+  max-width:560px;margin:0 auto 48px;
+  position:relative;z-index:1;
+}
+.hero-actions {
+  display:flex;align-items:center;gap:16px;
+  position:relative;z-index:1;
+  flex-wrap:wrap;justify-content:center;
+}
+.btn-primary {
+  font-size:15px;font-weight:600;
+  padding:14px 28px;
+  background:var(--indigo-500);color:#fff;
+  border:none;border-radius:8px;cursor:pointer;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 0 0 0 rgba(71,82,245,0);
+}
+.btn-primary:hover{
+  background:var(--indigo-400);transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(71,82,245,.3);
+}
+.btn-ghost {
+  font-size:15px;font-weight:500;
+  padding:14px 28px;
+  background:rgba(255,255,255,.06);color:#E8EAF2;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;cursor:pointer;
+  transition:background .2s,transform .15s;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.hero-trust {
+  display:flex;align-items:center;gap:24px;
+  margin-top:56px;
+  position:relative;z-index:1;
+  flex-wrap:wrap;justify-content:center;
+}
+.trust-item {
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:500;
+  color:var(--slate-500);
+  font-family:var(--font-mono);letter-spacing:.04em;
+}
+.trust-dot { width:6px;height:6px;border-radius:50%;background:var(--green-500);opacity:.7; }
+.trust-sep { color:rgba(255,255,255,.1);font-size:18px; }
+/* ── Rule card preview ── */
+.hero-preview {
+  margin-top:72px;
+  position:relative;z-index:1;
+  max-width:580px;width:100%;
+}
+.rule-card-preview {
+  background:#131628;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:24px;text-align:left;
+  box-shadow:0 24px 60px rgba(0,0,0,.4),0 0 0 1px rgba(71,82,245,.1);
+}
+.rcp-header { display:flex;align-items:center;gap:10px;margin-bottom:20px; }
+.rcp-icon {
+  width:32px;height:32px;background:rgba(94,213,190,.1);
+  border:1px solid rgba(94,213,190,.2);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.rcp-meta { font-size:11px;color:var(--slate-500);font-family:var(--font-mono); }
+.rcp-meta strong { color:var(--slate-300); }
+.rcp-label {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;
+}
+.rcp-when { color:var(--amber-400); }
+.rcp-then { color:var(--teal-300); }
+.rcp-because { color:var(--indigo-300); }
+.rcp-row { margin-bottom:14px; }
+.rcp-val {
+  font-size:13px;color:#D4D8F0;line-height:1.5;
+  padding-left:12px;border-left:2px solid rgba(255,255,255,.08);
+}
+.rcp-footer {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:20px;padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.rcp-author {
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;color:var(--slate-500);font-family:var(--font-mono);
+}
+.rcp-avatar {
+  width:20px;height:20px;border-radius:50%;
+  background:linear-gradient(135deg, var(--indigo-500), var(--teal-500));
+  font-size:9px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.rcp-badge {
+  font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border-radius:100px;
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);
+  color:var(--green-500);
+}
+/* ── Contrastive prompt indicator inside rule card ── */
+.rcp-prompt-indicator {
+  margin-top:10px;padding:10px 14px;border-radius:8px;
+  background:rgba(71,82,245,.06);border:1px solid rgba(71,82,245,.15);
+  display:flex;align-items:flex-start;gap:10px;
+}
+.rcp-prompt-icon {
+  flex-shrink:0;width:22px;height:22px;border-radius:6px;
+  background:rgba(71,82,245,.12);border:1px solid rgba(71,82,245,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--indigo-300);margin-top:1px;
+}
+.rcp-prompt-text {
+  font-size:11px;color:var(--slate-400);line-height:1.5;
+  font-family:var(--font-mono);
+}
+.rcp-prompt-text strong {
+  color:var(--indigo-300);font-weight:600;
+}
+.rcp-prompt-text .prompt-q {
+  color:var(--teal-300);font-style:italic;
+}
+/* ── Problem ── */
+.problem-section { background:#0D0D22; }
+.problem-grid {
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;margin-top:64px;align-items:start;
+}
+@media(max-width:768px){.problem-grid{grid-template-columns:1fr;gap:32px}}
+.problem-quote {
+  padding:32px;background:#0A0A1A;
+  border:1px solid rgba(255,255,255,.06);
+  border-left:3px solid var(--rose-500);
+  border-radius:12px;margin-bottom:24px;
+}
+.pq-text {
+  font-family:var(--font-serif);font-size:17px;font-weight:300;
+  font-style:italic;line-height:1.6;color:#D4D8F0;margin-bottom:16px;
+}
+.pq-credit { font-size:11px;color:var(--slate-500);font-family:var(--font-mono); }
+.problem-stat-grid { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+.stat-card {
+  padding:24px;background:#0A0A1A;
+  border:1px solid rgba(255,255,255,.07);border-radius:10px;
+}
+.stat-n {
+  font-family:var(--font-serif);font-size:36px;font-weight:300;
+  color:var(--indigo-300);line-height:1;margin-bottom:8px;
+}
+.stat-label { font-size:12px;color:var(--slate-500);line-height:1.4; }
+.problem-right-title {
+  font-family:var(--font-serif);font-size:28px;font-weight:300;
+  line-height:1.2;color:#fff;margin-bottom:20px;letter-spacing:-.02em;
+}
+.problem-right-title em{font-style:italic;color:var(--rose-500)}
+.problem-body { font-size:15px;line-height:1.8;color:var(--slate-400);margin-bottom:24px; }
+.problem-tag {
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-family:var(--font-mono);font-weight:500;
+  padding:5px 12px;border-radius:100px;
+  background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.2);
+  color:var(--rose-500);margin:4px;
+}
+/* ── Not That ── */
+.notthat-section { background:#09091A; }
+.comparison-table {
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;margin-top:56px;border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+}
+@media(max-width:640px){.comparison-table{grid-template-columns:1fr}}
+.ct-header { padding:20px 28px;display:flex;align-items:center;gap:10px; }
+.ct-header-them { background:#111122; }
+.ct-header-us { background:rgba(71,82,245,.12); }
+.ct-header-label {
+  font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate-500);
+}
+.ct-header-title {
+  font-family:var(--font-serif);font-size:22px;font-weight:300;
+  letter-spacing:-.02em;color:#fff;margin-top:4px;
+}
+.ct-header-them .ct-header-title { color:var(--slate-500); }
+.ct-row { display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(255,255,255,.05); }
+@media(max-width:640px){.ct-row{grid-template-columns:1fr}.comparison-table{border:none;gap:0}}
+.ct-cell { padding:20px 28px;font-size:13px;line-height:1.6; }
+.ct-cell-them { background:#0E0E1F;color:var(--slate-500); }
+.ct-cell-us { background:rgba(71,82,245,.06);color:#D4D8F0;border-left:1px solid rgba(71,82,245,.15); }
+.ct-cell strong { display:block;margin-bottom:4px; }
+.ct-cell-them strong { color:var(--slate-400); }
+.ct-cell-us strong { color:var(--teal-300); }
+/* ── How It Works ── */
+.how-section { background:#09091A; }
+.steps {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:32px;margin-top:64px;position:relative;
+}
+@media(max-width:768px){.steps{grid-template-columns:1fr}}
+.step-card {
+  padding:32px 28px;
+  background:#0D0D20;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  position:relative;
+  transition:border-color .2s,box-shadow .2s;
+}
+.step-card:hover{border-color:rgba(71,82,245,.3);box-shadow:0 0 40px rgba(71,82,245,.08)}
+.step-n {
+  font-family:var(--font-mono);font-size:11px;font-weight:600;
+  letter-spacing:.12em;color:var(--slate-600);
+  margin-bottom:20px;
+}
+.step-title {
+  font-family:var(--font-serif);font-size:20px;font-weight:300;
+  color:#fff;letter-spacing:-.01em;margin-bottom:12px;
+}
+.step-body { font-size:13px;line-height:1.7;color:var(--slate-400); }
+.step-tag {
+  display:inline-flex;margin-top:20px;
+  font-size:10px;font-family:var(--font-mono);font-weight:500;
+  padding:4px 10px;border-radius:6px;
+  background:rgba(255,255,255,.04);color:var(--slate-500);
+  border:1px solid rgba(255,255,255,.07);
+}
+/* ── The Layer Between ── */
+.layer-section { background:#060612; }
+.layer-diagram {
+  margin-top:64px;
+  position:relative;
+}
+.layer-flow {
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
+  align-items:center;
+  gap:0;
+  max-width:960px;
+  margin:0 auto 56px;
+}
+@media(max-width:900px){.layer-flow{grid-template-columns:1fr;gap:8px}}
+.lf-box {
+  padding:20px 24px;
+  border-radius:12px;
+  text-align:center;
+}
+.lf-box-label {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.lf-box-name {
+  font-family:var(--font-serif);font-size:16px;font-weight:300;
+  color:#fff;
+}
+.lf-arrow {
+  color:rgba(255,255,255,.15);
+  font-size:20px;
+  text-align:center;
+  padding:0 4px;
+}
+@media(max-width:900px){.lf-arrow{transform:rotate(90deg);font-size:16px}}
+/* Theirs: missing layer */
+.lf-product { background:#0E0E20;border:1px solid rgba(255,255,255,.08); }
+.lf-product .lf-box-label { color:var(--slate-600); }
+.lf-missing {
+  padding:20px 24px;border-radius:12px;
+  background:rgba(244,63,94,.04);
+  border:1px dashed rgba(244,63,94,.25);
+  text-align:center;
+  position:relative;
+}
+.lf-missing .lf-box-label { color:rgba(244,63,94,.5); }
+.lf-missing .lf-box-name { color:rgba(244,63,94,.6);font-style:italic;font-size:14px; }
+.lf-model { background:#0E0E20;border:1px solid rgba(255,255,255,.08); }
+.lf-model .lf-box-label { color:var(--slate-600); }
+.lf-output { background:#0E0E20;border:1px solid rgba(255,255,255,.08); }
+.lf-output .lf-box-label { color:var(--slate-600); }
+/* FieldRules: populated layer */
+.layer-with {
+  margin-top:48px;
+  max-width:960px;
+  margin-left:auto;margin-right:auto;
+}
+.layer-with-label {
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal-300);margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.layer-with-label::before {
+  content:'';width:24px;height:1px;background:var(--teal-300);opacity:.5;
+}
+.layer-populated {
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
+  align-items:center;
+  gap:0;
+}
+@media(max-width:900px){.layer-populated{grid-template-columns:1fr;gap:8px}}
+.lf-filled {
+  background:rgba(71,82,245,.08);
+  border:1px solid rgba(71,82,245,.25);
+  padding:20px 24px;border-radius:12px;
+  text-align:center;
+  position:relative;
+}
+.lf-filled .lf-box-label { color:var(--indigo-400); }
+.lf-filled .lf-box-name { color:#fff; }
+.lf-filled-arrow { color:rgba(71,82,245,.4);font-size:20px;text-align:center;padding:0 4px; }
+@media(max-width:900px){.lf-filled-arrow{transform:rotate(90deg);font-size:16px}}
+.lf-filled-prod { background:#0E0E20;border:1px solid rgba(71,82,245,.15); }
+.lf-filled-prod .lf-box-label { color:var(--indigo-400); }
+.lf-filled-model { background:#0E0E20;border:1px solid rgba(71,82,245,.15); }
+.lf-filled-model .lf-box-label { color:var(--indigo-400); }
+.lf-filled-out { background:rgba(94,213,190,.06);border:1px solid rgba(94,213,190,.2); }
+.lf-filled-out .lf-box-label { color:var(--teal-300); }
+.lf-filled-out .lf-box-name { color:var(--teal-300); }
+/* Three components */
+.layer-components {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-top:48px;max-width:960px;
+  margin-left:auto;margin-right:auto;
+}
+@media(max-width:768px){.layer-components{grid-template-columns:1fr}}
+.lc-card {
+  padding:28px 24px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;background:#0D0D20;
+}
+.lc-num {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.lc-num-context { color:var(--amber-400); }
+.lc-num-constraints { color:var(--teal-300); }
+.lc-num-reasoning { color:var(--indigo-300); }
+.lc-title { font-size:15px;font-weight:600;color:#fff;margin-bottom:10px; }
+.lc-body { font-size:13px;line-height:1.7;color:var(--slate-400); }
+/* ── Who ── */
+.who-section { background:#0D0D22; }
+.buyer-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px;margin-top:56px;
+}
+@media(max-width:768px){.buyer-grid{grid-template-columns:1fr}}
+.buyer-card {
+  padding:36px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  background:#111126;
+  position:relative;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+}
+.buyer-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.buyer-card-accent { position:absolute;top:0;left:0;right:0;height:3px; }
+.accent-ceo { background:linear-gradient(90deg, var(--indigo-400), var(--teal-400,#4ECDC4)); }
+.accent-product { background:linear-gradient(90deg, var(--teal-300), var(--indigo-300)); }
+.accent-cs { background:linear-gradient(90deg, var(--amber-500), var(--rose-500)); }
+.accent-eng { background:linear-gradient(90deg, #22C55E, #0EA5E9); }
+.buyer-avatar {
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-serif);font-size:22px;font-weight:300;font-style:italic;
+  color:#fff;margin-bottom:20px;
+}
+.av-ceo { background:linear-gradient(135deg, var(--indigo-700), var(--indigo-500)); }
+.av-product { background:linear-gradient(135deg, var(--teal-600), var(--teal-500)); }
+.av-cs { background:linear-gradient(135deg, #92400E, var(--amber-500)); }
+.av-eng { background:linear-gradient(135deg, #14532D, #22C55E); }
+.buyer-role {
+  font-family:var(--font-mono);font-size:10px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--slate-500);margin-bottom:8px;
+}
+.buyer-name {
+  font-family:var(--font-serif);font-size:24px;font-weight:300;
+  letter-spacing:-.02em;color:#fff;margin-bottom:16px;
+}
+.buyer-voice {
+  font-size:14px;line-height:1.7;color:var(--slate-400);
+  font-style:italic;margin-bottom:24px;padding:16px;
+  background:rgba(255,255,255,.03);border-radius:8px;
+  border-left:2px solid rgba(255,255,255,.1);
+}
+.buyer-needs { list-style:none;margin-bottom:24px; }
+.buyer-needs li {
+  font-size:13px;color:var(--slate-300);line-height:1.6;
+  padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:flex-start;gap:8px;
+}
+.buyer-needs li:last-child{border-bottom:none}
+.need-icon { color:var(--teal-300);flex-shrink:0;margin-top:2px; }
+.need-icon-amber { color:var(--amber-500);flex-shrink:0;margin-top:2px; }
+/* The layer callout inside buyer card */
+.buyer-layer {
+  margin-top:20px;
+  padding:16px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+}
+.bl-label {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.bl-label-ceo { color:var(--indigo-400); }
+.bl-label-pm { color:var(--teal-300); }
+.bl-label-cs { color:var(--amber-500); }
+.bl-label-eng { color:#22C55E; }
+.bl-text { font-size:12px;line-height:1.65;color:var(--slate-400); }
+.bl-text strong { color:#E8EAF2;font-weight:600; }
+/* ── Downstream loop ── */
+.loop-section { background:#070714;padding:80px 24px; }
+.loop-row {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:2px;
+  margin-top:48px;
+  border-radius:12px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  max-width:960px;margin-left:auto;margin-right:auto;
+}
+@media(max-width:768px){.loop-row{grid-template-columns:1fr 1fr}}
+.loop-step {
+  padding:28px 20px;
+  font-size:12px;
+  position:relative;
+}
+.loop-step:not(:last-child)::after {
+  content:'→';
+  position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+  font-size:16px;color:rgba(255,255,255,.15);z-index:2;
+}
+@media(max-width:768px){.loop-step::after{display:none}}
+.ls-n {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;
+}
+.ls-title { font-size:14px;font-weight:600;color:#fff;margin-bottom:8px; }
+.ls-body { font-size:12px;line-height:1.6;color:var(--slate-400); }
+.loop-step:nth-child(1) { background:#0D0D20; }
+.loop-step:nth-child(1) .ls-n { color:var(--slate-600); }
+.loop-step:nth-child(2) { background:#0E0E22; }
+.loop-step:nth-child(2) .ls-n { color:var(--indigo-400); }
+.loop-step:nth-child(3) { background:#0D1620; }
+.loop-step:nth-child(3) .ls-n { color:var(--teal-300); }
+.loop-step:nth-child(4) { background:rgba(94,213,190,.05);border-left:1px solid rgba(94,213,190,.15); }
+.loop-step:nth-child(4) .ls-n { color:var(--teal-300); }
+.loop-path {
+  max-width:960px;margin:24px auto 0;
+  text-align:center;
+  font-family:var(--font-mono);font-size:11px;
+  color:var(--slate-600);letter-spacing:.04em;
+}
+/* ── CTA ── */
+.cta-section { background:#0D0D22;padding:120px 24px; }
+.cta-h2 {
+  font-family:var(--font-serif);
+  font-size:clamp(36px,6vw,64px);
+  font-weight:300;line-height:1.1;letter-spacing:-.03em;
+  color:#fff;margin-bottom:20px;
+}
+.cta-h2 em { font-style:italic;color:var(--teal-300); }
+.cta-sub { font-size:17px;line-height:1.7;color:var(--slate-400);max-width:520px;margin-bottom:40px; }
+.cta-form { display:flex;gap:12px;flex-wrap:wrap; }
+.cta-input {
+  flex:1;min-width:240px;
+  padding:14px 18px;
+  background:#0A0A1A;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;
+  font-family:var(--font-sans);font-size:14px;color:#fff;
+  outline:none;transition:border-color .2s;
+}
+.cta-input:focus{border-color:rgba(71,82,245,.5)}
+.cta-input::placeholder{color:var(--slate-600)}
+/* ── Footer ── */
+footer {
+  padding:32px 40px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-logo { font-family:var(--font-serif);font-size:18px;font-weight:300;font-style:italic;color:#fff; }
+.footer-mono { font-family:var(--font-mono);font-size:11px;color:var(--slate-600);letter-spacing:.04em; }
+/* ── Research section ── */
+.research-section { background:#060612; }
+.research-grid {
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;margin-top:56px;
+}
+@media(max-width:768px){.research-grid{grid-template-columns:1fr}}
+.research-card {
+  padding:28px 28px 24px;
+  background:#0D0D20;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  position:relative;
+}
+.research-card:hover{border-color:rgba(71,82,245,.25)}
+.rc-concept {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--indigo-400);margin-bottom:12px;
+}
+.rc-title {
+  font-family:var(--font-serif);font-size:18px;font-weight:300;
+  color:#fff;letter-spacing:-.01em;margin-bottom:10px;line-height:1.3;
+}
+.rc-body {
+  font-size:13px;line-height:1.75;color:var(--slate-400);margin-bottom:16px;
+}
+.rc-body strong { color:#C8CCE8; font-weight:500; }
+.rc-cite {
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:10px;
+  color:var(--indigo-300);
+  background:rgba(71,82,245,.08);
+  border:1px solid rgba(71,82,245,.18);
+  border-radius:6px;padding:5px 10px;
+  text-decoration:none;
+  transition:background .15s,border-color .15s;
+  margin-right:6px;margin-top:4px;
+}
+.rc-cite:hover{background:rgba(71,82,245,.15);border-color:rgba(71,82,245,.35);color:#fff;}
+.rc-cite::before { content:'↗'; font-size:9px; opacity:.6; }
+.research-lead {
+  max-width:760px;margin-top:56px;
+  padding:28px 32px;
+  background:rgba(71,82,245,.05);
+  border:1px solid rgba(71,82,245,.15);
+  border-radius:14px;
+}
+.research-lead-label {
+  font-family:var(--font-mono);font-size:9px;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--teal-300);margin-bottom:14px;
+}
+.research-lead p {
+  font-size:15px;line-height:1.8;color:#C8CCE8;margin-bottom:12px;
+}
+.research-lead p:last-child { margin-bottom:0; }
+.research-lead strong { color:#fff;font-weight:500; }
+@keyframes becauseGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(165,174,255,0); border-color: rgba(255,255,255,.08); }
+  40%  { box-shadow: 0 0 32px 6px rgba(165,174,255,.18), 0 0 0 1px rgba(165,174,255,.3); border-color: rgba(165,174,255,.4); }
+  70%  { box-shadow: 0 0 48px 10px rgba(165,174,255,.12), 0 0 0 1px rgba(165,174,255,.2); border-color: rgba(165,174,255,.25); }
+  100% { box-shadow: 0 0 0 0 rgba(165,174,255,0); border-color: rgba(255,255,255,.08); }
+}
+@keyframes becauseLabelPulse {
+  0%,100% { opacity: 1; letter-spacing: .12em; }
+  45%     { opacity: 1; letter-spacing: .22em; color: #C7CAFF; }
+}
+@keyframes becauseTextReveal {
+  0%   { color: var(--slate-400); }
+  40%  { color: #E8EAF2; text-shadow: 0 0 20px rgba(165,174,255,.35); }
+  100% { color: #D4D8F0; text-shadow: none; }
+}
+@keyframes becauseBorderPulse {
+  0%,100% { border-left-color: rgba(255,255,255,.08); }
+  45%     { border-left-color: rgba(165,174,255,.6); }
+}
+@keyframes ifThenFade {
+  0%   { opacity: 1; }
+  30%  { opacity: .38; }
+  100% { opacity: 1; }
+}
+/* Applied to the because row wrapper */
+.rcp-row-because {
+  margin-bottom: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px;
+  padding: 10px 12px 10px 10px;
+  background: transparent;
+  animation: becauseGlow 3.2s ease-in-out 1.8s infinite;
+  transition: background .3s;
+}
+.rcp-row-because .rcp-label {
+  animation: becauseLabelPulse 3.2s ease-in-out 1.8s infinite;
+}
+.rcp-row-because .rcp-val {
+  animation: becauseTextReveal 3.2s ease-in-out 1.8s infinite;
+}
+.rcp-row-because .rcp-val {
+  border-left: 2px solid rgba(255,255,255,.08);
+  animation: becauseTextReveal 3.2s ease-in-out 1.8s infinite, becauseBorderPulse 3.2s ease-in-out 1.8s infinite;
+}
+/* IF and THEN dim slightly when BECAUSE glows */
+.rcp-row-ifthen {
+  margin-bottom: 14px;
+  animation: ifThenFade 3.2s ease-in-out 1.8s infinite;
+}
+/* Floating "only humans write this" tooltip that fades in */
+.because-tooltip {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--indigo-300);
+  background: rgba(165,174,255,.08);
+  border: 1px solid rgba(165,174,255,.2);
+  border-radius: 100px;
+  padding: 3px 10px;
+  opacity: 0;
+  animation: tooltipBlink 3.2s ease-in-out 1.8s infinite;
+}
+@keyframes tooltipBlink {
+  0%,25%,100% { opacity: 0; transform: translateY(3px); }
+  45%,75%     { opacity: 1; transform: translateY(0); }
+}
+/* ── Form states ── */
+.cta-form { position:relative; }
+.cta-success {
+  font-family:var(--font-mono);font-size:15px;color:var(--green-500);
+  letter-spacing:.02em;padding:16px 0;
+  animation:fadeUp .4s ease both;
+}
+.cta-error {
+  font-size:13px;color:var(--rose-500);margin-top:10px;
+  font-family:var(--font-mono);letter-spacing:.02em;
+  animation:fadeUp .3s ease both;
+}
+.cta-input.invalid { border-color:var(--rose-500) !important; }
+.btn-primary:disabled {
+  opacity:.6;cursor:not-allowed;
+}
+@keyframes fadeUp {
+  from { opacity:0;transform:translateY(8px); }
+  to { opacity:1;transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">FieldRules.</a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#layer">The Layer</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#who">Who It's For</a></li>
+  </ul>
+  <button class="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-cta" type="button">Request access</button>
+</nav>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">Your team's operational logic, structured for AI</div>
+  <h1 data-reveal>
+    ⚡ Every AI decision your product makes<br>will run on <em>someone's logic.</em><br>Make sure it's yours.
+  </h1>
+  <p class="hero-sub" data-reveal>
+    FieldRules makes your team's operational expertise visible, credited, and central to every AI decision your product makes — structured as attributed rules, routed into every AI surface that's supposed to act on them.
+  </p>
+  <div class="hero-actions" data-reveal>
+    <button class="btn-primary" type="button">Request early access</button>
+    <button class="btn-ghost" type="button">See how it works →</button>
+  </div>
+  <div class="hero-trust" data-reveal>
+    <div class="trust-item"><div class="trust-dot"></div>Series A–B SaaS</div>
+    <div class="trust-sep">·</div>
+    <div class="trust-item">IF / THEN / BECAUSE</div>
+    <div class="trust-sep">·</div>
+    <div class="trust-item">Field rules · not wiki</div>
+  </div>
+  <div class="hero-preview" data-reveal>
+    <div class="rule-card-preview">
+      <div class="rcp-header">
+        <div class="rcp-icon">⚡</div>
+        <div class="rcp-meta">
+          <div><strong>Clinical Operations SaaS</strong> · operational playbook</div>
+          <div>Identified from ticket #4112 · Trial site onboarding</div>
+        </div>
+      </div>
+      <div class="rcp-row rcp-row-ifthen">
+        <div class="rcp-label rcp-when">IF</div>
+        <div class="rcp-val">A trial site submits their first patient enrollment report within 14 days of activation AND their coordinator headcount is below 3</div>
+      </div>
+      <div class="rcp-row rcp-row-ifthen">
+        <div class="rcp-label rcp-then">THEN</div>
+        <div class="rcp-val">Do not auto-advance to full onboarding. Assign a dedicated specialist and schedule a 48-hour check-in before the site goes live with patients.</div>
+      </div>
+      <div class="rcp-row rcp-row-because">
+        <div class="rcp-label rcp-because">BECAUSE</div>
+        <div class="rcp-val">Sites this size with fast enrollment timelines are statistically high-dropout in weeks 3–5. Early intervention cuts churn by over half — but only if flagged before the standard onboarding flow locks in.</div>
+        <div class="because-tooltip">Only humans write this</div>
+        <div class="rcp-prompt-indicator">
+          <div class="rcp-prompt-icon">?</div>
+          <div class="rcp-prompt-text">
+            <strong>FieldRules asked:</strong> <span class="prompt-q">"What would go wrong if this rule didn't exist?"</span><br>
+            Not "why does this rule exist?" — contrastive prompts surface real reasoning, not post-hoc justification.
+          </div>
+        </div>
+      </div>
+      <div class="rcp-footer">
+        <div class="rcp-author">
+          <div class="rcp-avatar">J</div>
+          Jordan Chen · Domain Expert
+        </div>
+        <div class="rcp-badge">Confirmed</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="problem-section" id="problem">
+  <div class="inner">
+    <div class="section-eyebrow" data-reveal>🚨 The Problem</div>
+    <div class="problem-grid">
+      <div>
+        <div class="problem-quote" data-reveal>
+          <div class="pq-text">"We're deploying AI across the product. I have no idea what logic it's applying to real decisions — or whose it is."</div>
+          <div class="pq-credit"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#8B5CF6);font-size:9px;font-weight:700;color:#fff;margin-right:6px;vertical-align:middle;">RK</span>CEO · Series B SaaS · Clinical operations</div>
+        </div>
+        <div class="problem-quote" data-reveal>
+          <div class="pq-text">"My best practitioners are making judgment calls every day that shape how our product actually works. None of them get credit for it — and the AI has no idea it's happening."</div>
+          <div class="pq-credit"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#0EA5E9,#06B6D4);font-size:9px;font-weight:700;color:#fff;margin-right:6px;vertical-align:middle;">AN</span>CEO · Series A HealthTech</div>
+        </div>
+        <div class="problem-quote" data-reveal>
+          <div class="pq-text">"Half our business logic is buried in conditionals an engineer wrote two years ago based on a Slack message from a domain expert who no longer works here. That's what our AI is being asked to replace."</div>
+          <div class="pq-credit"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#F59E0B,#EF4444);font-size:9px;font-weight:700;color:#fff;margin-right:6px;vertical-align:middle;">DW</span>CTO · Series B SaaS · Revenue operations</div>
+        </div>
+        <div class="problem-stat-grid" data-reveal>
+          <div class="stat-card">
+            <div class="stat-n">42%</div>
+            <div class="stat-label">of the expertise an employee performs is only known to that individual <span style="font-size:10px;color:var(--slate-600);">— Panopto Workplace Knowledge Report, 2018</span></div>
+          <div class="stat-card">
+            <div class="stat-n">18mo</div>
+            <div class="stat-label">average time before an AI integration reveals logic gaps it can't handle</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="problem-right-title" data-reveal>The people closest to your customers<br><em>know the rules.</em><br>Your AI doesn't — unless you capture them first.</h3>
+        <p class="problem-body" data-reveal>
+          Every AI application in your product — routing, pricing, compliance, onboarding, escalations, exception handling — will make decisions based on conditional logic. If you haven't built the layer that supplies that logic, the model fills it in from training data. The model applies the industry average, not your specific way of working.
+        </p>
+        <p class="problem-body" data-reveal>
+          That logic exists already — applied by the practitioners who handle real-world edge cases every day. It's accumulated over years of exceptions, client commitments, and judgment calls that never made it into a spec. FieldRules gives it structure, attribution, and a permanent seat at the table — so the AI can't ship without it, and the people behind it get credit.
+        </p>
+        <p class="problem-body" data-reveal style="font-size:13px;color:var(--slate-500);margin-top:16px;">
+          <em>Forrester's 2026 CS Predictions</em> identified this exact gap: the customer success function lacks the structured knowledge layer to effectively guide AI-driven operations.
+        </p>
+        <div data-reveal>
+          <span class="problem-tag">⚡ AI runs on generic defaults</span>
+          <span class="problem-tag">🌐 Every AI surface is affected</span>
+          <span class="problem-tag">📉 Rules drift without notice</span>
+          <span class="problem-tag">🚫 Exception layer never reaches the model</span>
+          <span class="problem-tag">🔒 Real rules are hardcoded — not structured</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- NOT THAT -->
+<section class="how-section" id="how">
+  <div class="inner">
+    <div class="section-eyebrow" data-reveal>How It Works</div>
+    <h2 class="section-h2" data-reveal>
+      The rule surfaces<br><em>where the logic already lives.</em>
+    </h2>
+    <p class="section-lede" data-reveal>No new surfaces. No documentation workflow. Rules are triggered by real operational signals — a ticket, a codebase conditional, a periodic review — wherever the logic was already hiding.</p>
+    <div class="steps">
+      <div class="step-card" data-reveal>
+        <div class="step-n">01</div>
+        <div class="step-title">🔍 Logic surfaces</div>
+        <div class="step-body">A support ticket resolves with an implicit judgment call. A periodic review surfaces an undocumented pattern. FieldRules detects the IF/THEN/BECAUSE structure and drafts a candidate rule. The practitioner never has to start from scratch.</div>
+        <div class="step-tag">Tickets · Periodic review · Slack</div>
+      </div>
+      <div class="step-card" data-reveal>
+        <div class="step-n">02</div>
+        <div class="step-title">✅ Domain expert confirms</div>
+        <div class="step-body">Jordan gets a structured card in Slack. She confirms, edits, or dismisses — one tap. The BECAUSE field is never pre-filled. Only her words go there. That's the part that makes it defensible.</div>
+        <div class="step-tag">45 seconds · one decision</div>
+      </div>
+      <div class="step-card" data-reveal>
+        <div class="step-n">03</div>
+        <div class="step-title">📚 Rule enters the library. Product specs from it. AI runs on it.</div>
+        <div class="step-body">Structured, attributed, versioned. Alex specs from it. Engineers build from it. AI agents use it as a control layer — so product decisions reflect your operational reality, not a generic model's defaults.</div>
+        <div class="step-tag">Library → product specs → AI control layer</div>
+      </div>
+    </div>
+  </div>
+</section>
+    <div style="margin-top:56px;max-width:960px;margin-left:auto;margin-right:auto;" data-reveal>
+      <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--slate-600);margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+        <span style="width:20px;height:1px;background:rgba(255,255,255,.12);display:inline-block;"></span>
+        See the flow
+      </div>
+      <!-- Chip filters -->
+      <div id="demo-chips" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+        <button class="dc-chip dc-chip--active" data-step="0" type="button">Ticket resolved</button>
+        <button class="dc-chip" data-step="1" type="button">Rule detected</button>
+        <button class="dc-chip" data-step="2" type="button">Jordan confirms</button>
+        <button class="dc-chip" data-step="3" type="button">Rule goes live</button>
+      </div>
+      <div class="dc-progress-wrap" id="demo-progress">
+        <div class="dc-progress-seg"><div class="dc-progress-fill dc-progress-fill--active"></div></div>
+        <div class="dc-progress-seg"><div class="dc-progress-fill"></div></div>
+        <div class="dc-progress-seg"><div class="dc-progress-fill"></div></div>
+        <div class="dc-progress-seg"><div class="dc-progress-fill"></div></div>
+      </div>
+      <!-- Demo body -->
+      <div class="demo-body" style="height:500px;overflow:hidden;position:relative;background:#0A0A1C;border:1px solid rgba(255,255,255,.08);border-radius:12px;">
+        <!-- Step 0: Ticket resolved -->
+        <div class="demo-step demo-step--active" data-step="0" style="position:absolute;inset:0;padding:28px 32px;overflow-y:auto;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-600);margin-bottom:16px;">Zendesk · Ticket #4112 · Resolved</div>
+          <div style="background:#111122;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:20px 22px;max-width:600px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(71,82,245,.2);display:flex;align-items:center;justify-content:center;font-size:11px;">🎫</div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Trial site onboarding — edge case escalation</div>
+                <div style="font-size:11px;color:var(--slate-600);font-family:var(--font-mono);">Assigned: Jordan Chen · Resolved 2 min ago</div>
+              </div>
+              <div style="margin-left:auto;font-size:11px;font-weight:600;padding:3px 10px;background:rgba(34,197,94,.12);color:#22C55E;border:1px solid rgba(34,197,94,.2);border-radius:100px;">Resolved</div>
+            </div>
+            <div style="font-size:13px;color:var(--slate-400);line-height:1.7;margin-bottom:14px;">Trial submitted first patient report on day 3 — coordinator is part-time only. Held back from auto-advance and looped in Marcus as dedicated specialist. Scheduled 48hr check-in. Small sites move fast when engaged but drop hard if unsupported.</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <div style="font-size:11px;padding:3px 10px;background:rgba(71,82,245,.1);color:var(--indigo-300);border:1px solid rgba(71,82,245,.18);border-radius:100px;font-family:var(--font-mono);">onboarding</div>
+              <div style="font-size:11px;padding:3px 10px;background:rgba(71,82,245,.1);color:var(--indigo-300);border:1px solid rgba(71,82,245,.18);border-radius:100px;font-family:var(--font-mono);">trial-site</div>
+              <div style="font-size:11px;padding:3px 10px;background:rgba(71,82,245,.1);color:var(--indigo-300);border:1px solid rgba(71,82,245,.18);border-radius:100px;font-family:var(--font-mono);">escalation</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);">→ FieldRules reads the resolution notes. Detection starts.</div>
+        </div>
+        <!-- Step 1: Rule detected -->
+        <div class="demo-step" data-step="1" style="position:absolute;inset:0;padding:28px 32px;overflow-y:auto;opacity:0;pointer-events:none;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-600);margin-bottom:16px;">FieldRules · Rule candidate identified</div>
+          <div style="background:#111122;border:1px solid rgba(71,82,245,.2);border-radius:10px;padding:20px 22px;max-width:600px;">
+            <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-500);margin-bottom:14px;">Candidate rule · Trial site onboarding</div>
+            <div style="margin-bottom:10px;">
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-400);margin-bottom:4px;">IF</div>
+              <div style="font-size:13px;color:#C8CCE8;padding-left:10px;border-left:2px solid rgba(251,191,36,.25);line-height:1.6;">Trial site submits first patient report within 14 days AND coordinator headcount &lt; 3</div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-300);margin-bottom:4px;">THEN</div>
+              <div style="font-size:13px;color:#C8CCE8;padding-left:10px;border-left:2px solid rgba(94,213,190,.25);line-height:1.6;">Do not auto-advance to full onboarding. Assign dedicated specialist + schedule 48hr check-in.</div>
+            </div>
+            <div style="background:rgba(165,174,255,.04);border:1px solid rgba(165,174,255,.12);border-radius:6px;padding:10px 12px;margin-top:4px;">
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:4px;">BECAUSE</div>
+              <div style="font-size:12px;color:var(--slate-600);font-style:italic;">Awaiting Jordan's reasoning — this field is always blank until she writes it.</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);">→ Candidate rule routed to Jordan via Slack.</div>
+        </div>
+        <!-- Step 2: Jordan confirms -->
+        <div class="demo-step" data-step="2" style="position:absolute;inset:0;padding:28px 32px;overflow-y:auto;opacity:0;pointer-events:none;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-600);margin-bottom:16px;">Slack · #ops-alerts · Jordan's view</div>
+          <div style="background:#1A1D21;border-radius:10px;border:1px solid rgba(255,255,255,.07);max-width:560px;overflow:hidden;">
+            <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px;">
+              <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,var(--indigo-600),var(--teal-500));display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.05em;color:#fff;">FR</div>
+              <div style="font-size:13px;font-weight:700;color:#fff;">FieldRules</div>
+              <div style="font-size:10px;font-weight:600;letter-spacing:.05em;color:var(--teal-300);background:rgba(94,213,190,.1);border:1px solid rgba(94,213,190,.2);border-radius:4px;padding:1px 6px;">APP</div>
+            </div>
+            <div style="padding:16px;">
+              <p style="font-size:13px;color:#D4D8F0;line-height:1.6;margin-bottom:12px;">Hey Jordan — I spotted a pattern in <span style="color:var(--indigo-300);font-family:var(--font-mono);font-size:11px;">#4112</span>. Does this match how you handle it?</p>
+              <div style="background:#222529;border-left:3px solid var(--indigo-400);border-radius:6px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--slate-400);line-height:1.6;">
+                <strong style="color:#fff;display:block;margin-bottom:4px;">IF</strong> Trial site submits within 14 days AND coordinator headcount &lt; 3<br>
+                <strong style="color:var(--teal-300);display:block;margin-top:8px;margin-bottom:4px;">THEN</strong> Hold auto-advance · assign specialist · 48hr check-in
+              </div>
+              <div style="margin-bottom:12px;">
+                <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:6px;">Your BECAUSE</div>
+                <div class="slack-because-input" style="height:56px;overflow:hidden;background:#111318;border:1px solid rgba(165,174,255,.2);border-radius:6px;padding:10px 12px;"><span class="ghost-type-wrapper">Small sites go dark fast if they don't get personal attention early. Automation at this stage signals we don't care — and they notice.</span><span class="ghost-cursor"></span></div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <button style="font-family:var(--font-sans);font-size:12px;font-weight:600;padding:6px 14px;background:var(--indigo-500);color:#fff;border:none;border-radius:6px;cursor:pointer;">✓ Confirm</button>
+                <button style="font-family:var(--font-sans);font-size:12px;font-weight:500;padding:6px 14px;background:transparent;color:var(--slate-300);border:1px solid rgba(255,255,255,.15);border-radius:6px;cursor:pointer;">✎ Edit</button>
+                <button style="font-family:var(--font-sans);font-size:12px;font-weight:500;padding:6px 14px;background:transparent;color:var(--slate-500);border:1px solid rgba(255,255,255,.07);border-radius:6px;cursor:pointer;">✕ Dismiss</button>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);">→ One tap. 45 seconds. Rule enters the library with her name on it.</div>
+        </div>
+        <!-- Step 3: Rule goes live -->
+        <div class="demo-step" data-step="3" style="position:absolute;inset:0;padding:28px 32px;overflow-y:auto;opacity:0;pointer-events:none;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-600);margin-bottom:16px;">FieldRules Rule Library · Confirmed</div>
+          <div style="background:#111122;border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:20px 22px;max-width:600px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 8px rgba(34,197,94,.5);"></div>
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#22C55E;">Live · Trial site onboarding</div>
+              <div style="margin-left:auto;font-size:11px;color:var(--slate-600);font-family:var(--font-mono);">Confirmed by Jordan Chen · just now</div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber-400);margin-bottom:4px;">IF</div>
+              <div style="font-size:13px;color:#C8CCE8;padding-left:10px;border-left:2px solid rgba(251,191,36,.25);line-height:1.6;">Trial site submits first patient report within 14 days AND coordinator headcount &lt; 3</div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-300);margin-bottom:4px;">THEN</div>
+              <div style="font-size:13px;color:#C8CCE8;padding-left:10px;border-left:2px solid rgba(94,213,190,.25);line-height:1.6;">Do not auto-advance to full onboarding. Assign dedicated specialist + schedule 48hr check-in.</div>
+            </div>
+            <div style="background:rgba(165,174,255,.06);border:1px solid rgba(165,174,255,.2);border-radius:6px;padding:10px 12px;margin-top:4px;">
+              <div style="font-family:var(--font-mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo-300);margin-bottom:4px;">BECAUSE — Jordan Chen</div>
+              <div style="font-size:13px;color:#D4D8F0;line-height:1.6;font-style:italic;">"Small sites go dark fast if they don't get personal attention early. Automation at this stage signals we don't care — and they notice."</div>
+            </div>
+            <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:20px;">
+              <div style="font-size:11px;color:var(--slate-600);font-family:var(--font-mono);">v1.0 · <span style="color:var(--slate-500);">Jordan Chen</span></div>
+              <div style="font-size:11px;color:var(--slate-600);font-family:var(--font-mono);">Used by: <span style="color:var(--teal-300);">@fieldrules AI layer</span></div>
+              <div style="font-size:11px;color:var(--slate-600);font-family:var(--font-mono);">Next review: <span style="color:var(--slate-400);">90 days</span></div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);">→ Structured, attributed, versioned. AI agents query it at inference time.</div>
+        </div>
+      </div>
+    </div>
+    <!-- BEHAVIORAL CHALLENGE CALLOUT -->
+    <div style="margin-top:48px;max-width:760px;margin-left:auto;margin-right:auto;padding:24px 28px;background:rgba(165,174,255,.04);border:1px solid rgba(165,174,255,.15);border-radius:10px;display:flex;gap:20px;align-items:flex-start;" data-reveal>
+      <div style="flex-shrink:0;width:32px;height:32px;border-radius:8px;background:rgba(165,174,255,.08);border:1px solid rgba(165,174,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;">🧠</div>
+      <div>
+        <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:6px;">The elicitation layer</div>
+        <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:8px;">Confirmation quality is a <em style="color:var(--teal-300);">behavioral challenge</em></div>
+        <div style="font-size:13px;color:var(--slate-400);line-height:1.65;">Familiarity breeds shortcuts. If the confirmation surface stays static, reasoning quality degrades. FieldRules treats this as a first-class design problem, driven by continuous research in behavioral science and HCI — contrastive framing, anti-habituation patterns, cognitive load calibration.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:80px 32px;">
+      <div style="width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);margin-bottom:40px;"></div>
+      <div style="font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate-500);margin-bottom:32px;">That's the 45-second version.</div>
+      <button style="font-family:var(--font-sans);font-size:14px;font-weight:600;padding:12px 32px;background:var(--indigo-500);color:#fff;border:none;border-radius:8px;cursor:pointer;transition:background .2s,transform .15s;margin-bottom:24px;" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Request early access</button>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--slate-500);font-family:var(--font-mono);margin-bottom:32px;">
+        Want the full technical deep-dive? <a href="https://fieldrules.ai/marketing" style="color:var(--indigo-400);text-decoration:none;border-bottom:1px solid var(--indigo-400);">See the full page →</a>
+      </div>
+      <div style="width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);"></div>
+    </div>
+<section class="cta-section" id="cta">
+  <div class="inner">
+    <h2 class="cta-h2" data-reveal>
+      🤝 Request early<br><em>access.</em>
+    </h2>
+    <p class="cta-sub" data-reveal>
+      We're onboarding a small number of Series A–B SaaS teams manually. One pilot customer at a time. If the timing is right for you, let's talk.
+    </p>
+    <form class="cta-form" data-reveal id="cta-form" autocomplete="on">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input class="cta-input" type="email" name="email" placeholder="your@company.com" required>
+      <button class="btn-primary" type="submit">Request access</button>
+    </form>
+    <p style="margin-top:20px;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);letter-spacing:.04em" data-reveal>
+      No deck. No demo-ware. We start with a conversation.
+    </p>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FieldRules.</div>
+  <div class="footer-mono">v9.1 · Public Marketing Page · March 2026</div>
+  <div class="footer-mono">Your team's operational logic, structured for AI · Series A–B SaaS</div>
+</footer>
+<script>
+try {
+  document.addEventListener('DOMContentLoaded', function() {
+    // ── Reveal on scroll ──
+    var els = document.querySelectorAll('[data-reveal]');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function(el) { observer.observe(el); });
+    // ── Smooth scroll helper (works inside iframes) ──
+    var NAV_HEIGHT = 56;
+    function scrollTo(id) {
+      var target = id === 'top' ? document.body : document.getElementById(id);
+      if (!target) return;
+      var top = id === 'top' ? 0 : target.getBoundingClientRect().top + window.pageYOffset - NAV_HEIGHT;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+    // ── Ghost engine demo chip interaction + auto-cycle ──
+    var demoChips = document.querySelectorAll('#demo-chips .dc-chip');
+    var demoSteps = document.querySelectorAll('.demo-step');
+    var progressFills = document.querySelectorAll('#demo-progress .dc-progress-fill');
+    var autoStep = 0;
+    var autoTimer = null;
+    var autoPaused = false;
+
+    function goToStep(n) {
+      autoStep = n;
+      demoChips.forEach(function(c) { c.classList.remove('dc-chip--active'); });
+      demoSteps.forEach(function(s) { s.classList.remove('demo-step--active'); });
+      var chip = document.querySelector('#demo-chips .dc-chip[data-step="' + n + '"]');
+      var step = document.querySelector('.demo-step[data-step="' + n + '"]');
+      if (chip) chip.classList.add('dc-chip--active');
+      if (step) step.classList.add('demo-step--active');
+      progressFills.forEach(function(f, i) {
+        f.classList.remove('dc-progress-fill--active', 'dc-progress-fill--done');
+        if (i < n) f.classList.add('dc-progress-fill--done');
+        else if (i === n) f.classList.add('dc-progress-fill--active');
+      });
+    }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(function() {
+        if (!autoPaused) { autoStep = (autoStep + 1) % 4; goToStep(autoStep); }
+      }, 4000);
+    }
+
+    function stopAuto() {
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+
+    demoChips.forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        var step = parseInt(this.dataset.step, 10);
+        goToStep(step);
+        startAuto();
+        var tappedChip = this;
+        tappedChip.classList.add('dc-chip-on');
+        tappedChip.addEventListener('animationend', function onEnd() {
+          tappedChip.classList.remove('dc-chip-on');
+          tappedChip.removeEventListener('animationend', onEnd);
+        });
+      });
+    });
+
+    var demoContainer = document.getElementById('demo-chips');
+    var demoBody = document.querySelector('.demo-body');
+    [demoContainer, demoBody].forEach(function(el) {
+      if (!el) return;
+      el.addEventListener('mouseenter', function() { autoPaused = true; });
+      el.addEventListener('mouseleave', function() { autoPaused = false; });
+    });
+
+    goToStep(0);
+    startAuto();
+    // ── Intercept all anchor href="#..." clicks ──
+    document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = this.getAttribute('href').slice(1) || 'top';
+        scrollTo(id);
+      });
+    });
+    // ── Hero buttons ──
+    var heroBtns = document.querySelectorAll('.hero-actions button');
+    if (heroBtns[0]) heroBtns[0].addEventListener('click', function() { scrollTo('cta'); });
+    if (heroBtns[1]) heroBtns[1].addEventListener('click', function() { scrollTo('how'); });
+    // ── Nav CTA + all other CTA buttons ──
+    document.querySelectorAll('.nav-cta, .cta-section .btn-primary').forEach(function(btn) {
+      btn.addEventListener('click', function() { scrollTo('cta'); });
+    });
+    // ── Active nav link on scroll ──
+    var sections = ['problem','how','layer','research','who','cta'];
+    var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    function setActive() {
+      var scrollY = window.pageYOffset + NAV_HEIGHT + 32;
+      var current = '';
+      sections.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollY) current = id;
+      });
+      navLinks.forEach(function(a) {
+        var id = a.getAttribute('href').slice(1);
+        a.classList.toggle('active', id === current);
+      });
+    }
+    window.addEventListener('scroll', setActive, { passive: true });
+    setActive();
+    // ── Hamburger menu ──
+    var hamburger = document.querySelector('.hamburger');
+    var navLinksEl = document.querySelector('.nav-links');
+    if (hamburger && navLinksEl) {
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('open');
+        navLinksEl.classList.toggle('open');
+      });
+      navLinksEl.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hamburger.classList.remove('open');
+          navLinksEl.classList.remove('open');
+        });
+      });
+    }
+    // ── Form submission via FormSubmit.co ──
+    var ctaForm = document.getElementById('cta-form');
+    if (ctaForm) {
+      ctaForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var input = ctaForm.querySelector('.cta-input');
+        var btn = ctaForm.querySelector('.btn-primary');
+        var email = input.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          input.classList.add('invalid');
+          input.addEventListener('input', function() { input.classList.remove('invalid'); }, { once: true });
+          return;
+        }
+        var btnText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending\u2026';
+        fetch('https://formsubmit.co/ajax/melanie.gower@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            _subject: 'FieldRules — New signup (marketing page)',
+            _template: 'table'
+          })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.success === 'true' || data.success === true) {
+            ctaForm.innerHTML = '<p class="cta-success">\u2713 You\u2019re on the list. We\u2019ll be in touch.</p>';
+          } else { throw new Error('fail'); }
+        })
+        .catch(function() {
+          btn.disabled = false;
+          btn.textContent = btnText;
+          var old = ctaForm.querySelector('.cta-error');
+          if (old) old.remove();
+          var err = document.createElement('p');
+          err.className = 'cta-error';
+          err.textContent = 'Something went wrong \u2014 try again or email melanie.gower@gmail.com';
+          ctaForm.appendChild(err);
+          setTimeout(function() { err.remove(); }, 6000);
+        });
+      });
+    }
+  });
+} catch(e) { console.warn('FieldRules marketing init error:', e); }
+</script>
+</body>
+</html>
