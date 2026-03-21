@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- VERSION: Pilot v7 — FieldRules -->
+<!-- VERSION: Pilot v8 — FieldRules -->
 <!-- nav-mode: in-page -->
 <title>FieldRules — Apply for Early Access · Design Partner Program</title>
 <meta name="description" content="FieldRules Design Partner Program — Apply for early access to the context and harness layer for AI-native SaaS.">
@@ -104,6 +104,32 @@ nav {
   transition:background .2s,transform .15s;
 }
 .nav-cta:hover{background:var(--indigo-400);transform:translateY(-1px)}
+/* ── Mobile hamburger ── */
+.hamburger {
+  display:none;
+  background:none;border:none;cursor:pointer;padding:8px;
+  flex-direction:column;gap:5px;margin-left:auto;
+}
+.hamburger span {
+  display:block;width:22px;height:2px;background:#fff;border-radius:2px;
+  transition:transform .25s ease,opacity .2s ease;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-links{
+    display:none;position:fixed;top:56px;left:0;right:0;
+    flex-direction:column;background:rgba(7,7,20,.97);
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+    padding:16px 24px;gap:4px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{font-size:15px;padding:12px 16px;border-radius:8px}
+  .nav-cta{display:none}
+}
 /* ── Ghost engine demo chips ── */
 .dc-chip {
   font-family:var(--font-sans);font-size:12px;font-weight:500;
@@ -859,6 +885,7 @@ footer {
     <li><a href="#layer">The Layer</a></li>
     <li><a href="#research">Research</a></li>
   </ul>
+  <button class="hamburger" type="button" aria-label="Menu"><span></span><span></span><span></span></button>
   <button class="nav-cta" type="button">Apply for Early Access</button>
 </nav>
 <!-- HERO -->
@@ -927,7 +954,7 @@ footer {
 <!-- PROBLEM -->
 <section class="problem-section" id="problem">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Problem</div>
+    <div class="section-eyebrow" data-reveal>🚨 The Problem</div>
     <div class="problem-grid">
       <div>
         <div class="problem-quote" data-reveal>
@@ -975,7 +1002,7 @@ footer {
 <!-- WHAT DESIGN PARTNERS GET -->
 <section class="how-section" id="partners" style="background:#0A0A1E;">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Design Partner Program</div>
+    <div class="section-eyebrow" data-reveal>🤝 The Design Partner Program</div>
     <h2 class="section-h2" data-reveal>
       You're not buying a product.<br><em>You're shaping one.</em>
     </h2>
@@ -1005,7 +1032,7 @@ footer {
 <!-- NOT THAT -->
 <section class="notthat-section" id="notthat">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>Not That</div>
+    <div class="section-eyebrow" data-reveal>📄 Not That</div>
     <h2 class="section-h2" data-reveal>
       Your documentation is<br><em>source material, not the answer.</em>
     </h2>
@@ -1132,7 +1159,7 @@ footer {
 <!-- HOW IT WORKS -->
 <section class="how-section" id="how">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>How It Works</div>
+    <div class="section-eyebrow" data-reveal>⚙️ How It Works</div>
     <h2 class="section-h2" data-reveal>
       The rule surfaces<br><em>where the logic already lives.</em>
     </h2>
@@ -1355,7 +1382,7 @@ footer {
     <div style="margin-top:64px;max-width:960px;" data-reveal>
       <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:6px;">Rule ownership</div>
       <h3 style="font-family:var(--font-serif);font-size:clamp(22px,3vw,30px);font-weight:300;line-height:1.2;letter-spacing:-.02em;color:#fff;margin-bottom:10px;">The person who knows best<br><em style="font-style:italic;color:var(--teal-300);">is the author — not the approver.</em></h3>
-      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:580px;margin-bottom:32px;">FieldRules doesn't route rules to a manager for sign-off. It routes them to the person whose judgment generated the rule in the first place. The BECAUSE field isn't a summary written by someone else. It's authored by the domain expert — in their words, on their authority.</p>
+      <p style="font-size:15px;color:var(--slate-400);line-height:1.7;max-width:580px;margin-bottom:32px;">FieldRules doesn't route rules to a manager for sign-off. It routes them to the person whose judgment generated the rule in the first place. The reasoning isn't a summary written by someone else. It's authored by the domain expert — in their words, on their authority.</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
         <div style="padding:20px 22px;background:#0A0A1C;border:1px solid rgba(71,82,245,.15);border-radius:10px;">
           <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo-400);margin-bottom:10px;">Who becomes owner</div>
@@ -1434,11 +1461,38 @@ footer {
 </section>
 <section class="layer-section" id="layer">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Layer Between</div>
+    <div class="section-eyebrow" data-reveal>🏗️ The Layer Between</div>
     <h2 class="section-h2" data-reveal>
       The AI doesn't know<br><em>how your company works.</em>
     </h2>
     <p class="section-lede" data-reveal>Between your product and the AI model, there's a layer that determines what context the AI receives, what constraints it operates under, and what reasoning it applies. Most companies haven't built it deliberately.</p>
+    <!-- STACK DIAGRAM -->
+    <div data-reveal style="margin:48px auto 56px;max-width:420px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+        <div style="width:100%;padding:18px 24px;background:#0D0D20;border:1px solid rgba(255,255,255,.08);border-radius:10px 10px 0 0;text-align:center;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-500);margin-bottom:4px;">🖥️ Your Product</div>
+          <div style="font-size:12px;color:var(--slate-400);">Support tickets · Product events · Periodic reviews</div>
+        </div>
+        <div style="width:2px;height:20px;background:rgba(255,255,255,.1);"></div>
+        <div style="width:100%;padding:20px 24px;background:linear-gradient(135deg,rgba(71,82,245,.12),rgba(94,213,190,.08));border:1.5px solid rgba(71,82,245,.35);border-radius:10px;text-align:center;position:relative;box-shadow:0 0 30px rgba(71,82,245,.1);">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo-300);margin-bottom:4px;">🏗️ FieldRules — Context &amp; Harness Layer</div>
+          <div style="font-size:12px;color:var(--teal-300);">Structured rules · Human reasoning · Confirmed logic</div>
+          <div style="position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--indigo-400);box-shadow:0 0 8px var(--indigo-400);"></div>
+          <div style="position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;background:var(--teal-400);box-shadow:0 0 8px var(--teal-400);"></div>
+        </div>
+        <div style="width:2px;height:20px;background:rgba(255,255,255,.1);"></div>
+        <div style="width:100%;padding:18px 24px;background:#0D0D20;border:1px solid rgba(255,255,255,.08);border-radius:0;text-align:center;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-500);margin-bottom:4px;">🤖 AI Model</div>
+          <div style="font-size:12px;color:var(--slate-400);">GPT-4 · Claude · Gemini · any frontier LLM</div>
+        </div>
+        <div style="width:2px;height:20px;background:rgba(255,255,255,.1);"></div>
+        <div style="width:100%;padding:18px 24px;background:#0D0D20;border:1px solid rgba(255,255,255,.08);border-radius:0 0 10px 10px;text-align:center;">
+          <div style="font-family:var(--font-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--slate-500);margin-bottom:4px;">☁️ Infrastructure</div>
+          <div style="font-size:12px;color:var(--slate-400);">Hosting · APIs · Data stores</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:16px;font-size:12px;color:var(--slate-500);font-family:var(--font-mono);">The highlighted layer is what FieldRules builds.</div>
+    </div>
     <div class="layer-diagram" data-reveal>
       <!-- Without FieldRules -->
       <div style="margin-bottom:12px;">
@@ -1615,7 +1669,7 @@ footer {
 <!-- CONTEXT & HARNESS: WHAT THE RESEARCH SHOWS -->
 <section class="research-section" id="research">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>The Research</div>
+    <div class="section-eyebrow" data-reveal>📚 The Research</div>
     <h2 class="section-h2" data-reveal>
       This isn't our opinion.<br><em>It's where software is going.</em>
     </h2>
@@ -1635,6 +1689,7 @@ footer {
         <div class="rc-body">Ovadia et al. (2024) compared fine-tuning and retrieval-augmented generation (RAG) across knowledge-intensive tasks. <strong>RAG consistently outperforms fine-tuning for incorporating new and domain-specific knowledge</strong> — including knowledge encountered during training. Critically, LLMs struggle to learn new factual information from unsupervised fine-tuning at all. The implication is direct: your operational rules can't be baked into model weights reliably. They need to be supplied at inference — which means they need to be structured, retrievable, and correct before they enter the context.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2312.05934" target="_blank" rel="noopener">Ovadia et al. 2024 · Fine-Tuning or Retrieval? · EMNLP 2024</a>
       </div>
+      <div id="research-expanded" style="display:none;contents:none;">
       <div class="research-card">
         <div class="rc-concept">Process supervision & the BECAUSE field</div>
         <div class="rc-title">Reasoning steps — not just answers — are what allow models to generalize and self-correct</div>
@@ -1659,6 +1714,10 @@ footer {
         <div class="rc-body">Zhang et al. (2025) introduced ACE (Agentic Context Engineering), treating context not as a static prompt but as <strong>an evolving playbook that accumulates, refines, and organizes operational knowledge</strong> through structured generation, reflection, and curation cycles. Agents using structured, incrementally-maintained context outperformed strong baselines by +10.6% on agent benchmarks and +8.6% on domain-specific tasks. The key finding: <strong>a smaller model with well-engineered, structured context can match or exceed a larger model without it.</strong> The context layer isn't a feature of your AI product. It is your AI product.</div>
         <a class="rc-cite" href="https://arxiv.org/abs/2510.04618" target="_blank" rel="noopener">Zhang et al. 2025 · Agentic Context Engineering (ACE) · arXiv Oct 2025</a>
       </div>
+      </div><!-- /research-expanded -->
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+      <button id="research-toggle" onclick="var el=document.getElementById('research-expanded');var open=el.style.display==='none';el.style.display=open?'contents':'none';this.textContent=open?'Show fewer ▲':'Show 4 more research papers ▼';" style="font-family:var(--font-mono);font-size:12px;font-weight:500;padding:10px 20px;border-radius:8px;background:rgba(71,82,245,.08);border:1px solid rgba(71,82,245,.2);color:var(--indigo-300);cursor:pointer;transition:background .15s,border-color .15s;">Show 4 more research papers ▼</button>
     </div>
     <div class="research-lead" data-reveal>
       <div class="research-lead-label">The throughline</div>
@@ -1670,7 +1729,7 @@ footer {
 <!-- WHO IT'S FOR -->
 <section class="who-section" id="who">
   <div class="inner">
-    <div class="section-eyebrow" data-reveal>Who It's For</div>
+    <div class="section-eyebrow" data-reveal>👥 Who It's For</div>
     <h2 class="section-h2" data-reveal>
       Four principals.<br><em>One layer.</em>
     </h2>
@@ -1886,6 +1945,21 @@ try {
     }
     window.addEventListener('scroll', setActive, { passive: true });
     setActive();
+    // ── Hamburger menu ──
+    var hamburger = document.querySelector('.hamburger');
+    var navLinksEl = document.querySelector('.nav-links');
+    if (hamburger && navLinksEl) {
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('open');
+        navLinksEl.classList.toggle('open');
+      });
+      navLinksEl.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hamburger.classList.remove('open');
+          navLinksEl.classList.remove('open');
+        });
+      });
+    }
     // ── Form submission via FormSubmit.co ──
     var ctaForm = document.getElementById('cta-form');
     if (ctaForm) {
