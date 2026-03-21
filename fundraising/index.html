@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- VERSION: Fundraising v6 — FieldRules -->
+<!-- VERSION: Fundraising v7 — FieldRules -->
 <!-- nav-mode: in-page -->
 <title>FieldRules — The Context &amp; Harness Layer for AI-Native SaaS · Seed Round</title>
 <meta name="description" content="FieldRules — The context and harness layer for AI-native SaaS. Seed round: $1.5M–$3M. Category-defining infrastructure for the AI-native stack.">
@@ -825,6 +825,26 @@ footer {
 @keyframes tooltipBlink {
   0%,25%,100% { opacity: 0; transform: translateY(3px); }
   45%,75%     { opacity: 1; transform: translateY(0); }
+}
+/* ── Form states ── */
+.cta-form { position:relative; }
+.cta-success {
+  font-family:var(--font-mono);font-size:15px;color:var(--green-500);
+  letter-spacing:.02em;padding:16px 0;
+  animation:fadeUp .4s ease both;
+}
+.cta-error {
+  font-size:13px;color:var(--rose-500);margin-top:10px;
+  font-family:var(--font-mono);letter-spacing:.02em;
+  animation:fadeUp .3s ease both;
+}
+.cta-input.invalid { border-color:var(--rose-500) !important; }
+.btn-primary:disabled {
+  opacity:.6;cursor:not-allowed;
+}
+@keyframes fadeUp {
+  from { opacity:0;transform:translateY(8px); }
+  to { opacity:1;transform:translateY(0); }
 }
 </style>
 </head>
@@ -1836,10 +1856,11 @@ footer {
     <p class="cta-sub" data-reveal>
       FieldRules is raising a $1.5M–$3M seed round to build the context and harness layer for AI-native SaaS. We're looking for investors who understand infrastructure timing, category creation, and the compounding value of structured operational logic.
     </p>
-    <div class="cta-form" data-reveal>
-      <input class="cta-input" type="email" placeholder="your@fund.com">
-      <button class="btn-primary" type="button">Request investor deck</button>
-    </div>
+    <form class="cta-form" data-reveal id="cta-form" autocomplete="on">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <input class="cta-input" type="email" name="email" placeholder="your@fund.com" required>
+      <button class="btn-primary" type="submit">Request investor deck</button>
+    </form>
     <p style="margin-top:20px;font-size:12px;color:var(--slate-600);font-family:var(--font-mono);letter-spacing:.04em" data-reveal>
       Solo founder · Pre-seed → Seed · First pilot Q2 2026 · Third-party validated (CompanyOS + SkillNet)
     </p>
@@ -1848,7 +1869,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">FieldRules.</div>
-  <div class="footer-mono">v6 · FieldRules Fundraising Page · March 2026</div>
+  <div class="footer-mono">v7 · FieldRules Fundraising Page · March 2026</div>
   <div class="footer-mono">Seed Round · $1.5M–$3M · Category creation for AI-native SaaS</div>
 </footer>
 <script>
@@ -1928,6 +1949,50 @@ try {
     }
     window.addEventListener('scroll', setActive, { passive: true });
     setActive();
+    // ── Form submission via FormSubmit.co ──
+    var ctaForm = document.getElementById('cta-form');
+    if (ctaForm) {
+      ctaForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var input = ctaForm.querySelector('.cta-input');
+        var btn = ctaForm.querySelector('.btn-primary');
+        var email = input.value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          input.classList.add('invalid');
+          input.addEventListener('input', function() { input.classList.remove('invalid'); }, { once: true });
+          return;
+        }
+        var btnText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending\u2026';
+        fetch('https://formsubmit.co/ajax/melanie.gower@gmail.com', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            _subject: 'FieldRules — New inquiry (fundraising page)',
+            _template: 'table'
+          })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.success === 'true' || data.success === true) {
+            ctaForm.innerHTML = '<p class="cta-success">\u2713 Request received. We\u2019ll follow up shortly.</p>';
+          } else { throw new Error('fail'); }
+        })
+        .catch(function() {
+          btn.disabled = false;
+          btn.textContent = btnText;
+          var old = ctaForm.querySelector('.cta-error');
+          if (old) old.remove();
+          var err = document.createElement('p');
+          err.className = 'cta-error';
+          err.textContent = 'Something went wrong \u2014 try again or email melanie.gower@gmail.com';
+          ctaForm.appendChild(err);
+          setTimeout(function() { err.remove(); }, 6000);
+        });
+      });
+    }
   });
 } catch(e) { console.warn('FieldRules marketing init error:', e); }
 </script>
