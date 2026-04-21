@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<!-- VERSION: Pilot v9.1 — FieldRules -->
+<!-- VERSION: Pilot v9.2 — FieldRules (DEV-464: Two-Way Loop bidirectional) -->
 <!-- nav-mode: in-page -->
 <title>FieldRules — Apply for Early Access · Design Partner Program</title>
 <meta name="description" content="FieldRules Design Partner Program — Apply for early access to the context and harness layer for AI-native SaaS.">
@@ -702,6 +702,83 @@ section { padding:96px 24px; }
   font-family:var(--font-mono);font-size:11px;
   color:var(--slate-600);letter-spacing:.04em;
 }
+/* DEV-464 — Two-Way Loop: bidirectional treatment (matrix v1_2) */
+.loop-lane { margin-top:48px; }
+.loop-lane + .loop-lane { margin-top:0; }
+.loop-lane-label {
+  max-width:960px; margin:0 auto 14px;
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:10px;
+  padding:0 4px;
+}
+.loop-lane-arrow {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:20px; height:20px; border-radius:50%;
+  background:rgba(165,174,255,.08); border:1px solid rgba(165,174,255,.22);
+  font-size:12px; color:var(--indigo-300); flex-shrink:0;
+}
+.loop-lane--demand .loop-lane-arrow {
+  color:var(--teal-300);
+  background:rgba(94,213,190,.08);
+  border-color:rgba(94,213,190,.22);
+}
+.loop-lane-name {
+  font-family:var(--font-mono); font-size:10px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:#D4D8F0;
+}
+.loop-lane-sub {
+  font-family:var(--font-sans); font-size:12px; font-weight:400;
+  color:var(--slate-500); letter-spacing:.01em;
+}
+.loop-lane .loop-row { margin-top:0; }
+.loop-lane--demand .loop-step:nth-child(1) { background:rgba(94,213,190,.05);border-left:1px solid rgba(94,213,190,.15); }
+.loop-lane--demand .loop-step:nth-child(1) .ls-n { color:var(--teal-300); }
+.loop-lane--demand .loop-step:nth-child(2) { background:#0D1620; }
+.loop-lane--demand .loop-step:nth-child(2) .ls-n { color:var(--teal-300); }
+.loop-lane--demand .loop-step:nth-child(3) { background:#0E0E22; }
+.loop-lane--demand .loop-step:nth-child(3) .ls-n { color:var(--indigo-400); }
+.loop-lane--demand .loop-step:nth-child(4) { background:#0D0D20; border-left:none; }
+.loop-lane--demand .loop-step:nth-child(4) .ls-n { color:var(--slate-600); }
+.loop-close {
+  max-width:960px; margin:24px auto;
+  display:flex; align-items:center; justify-content:center; gap:14px;
+}
+.loop-close-curve {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:50%;
+  background:linear-gradient(135deg, rgba(71,82,245,.18), rgba(94,213,190,.18));
+  border:1px solid rgba(165,174,255,.28);
+  font-size:20px; color:#E8EAF2; flex-shrink:0;
+  box-shadow:0 0 24px rgba(71,82,245,.12);
+}
+.loop-close-label {
+  font-family:var(--font-mono); font-size:11px; color:var(--slate-500);
+  letter-spacing:.03em; line-height:1.55; text-align:left; max-width:560px;
+}
+.loop-close-label strong { color:#D4D8F0; font-weight:500; }
+@media(max-width:560px){
+  .loop-close { flex-direction:column; gap:10px; }
+  .loop-close-label { text-align:center; }
+}
+.loop-moat {
+  max-width:760px; margin:48px auto 0;
+  padding:24px 28px;
+  background:rgba(71,82,245,.05);
+  border:1px solid rgba(71,82,245,.18);
+  border-left:3px solid var(--indigo-500);
+  border-radius:12px;
+  text-align:left;
+}
+.loop-moat-label {
+  font-family:var(--font-mono); font-size:10px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--indigo-300); margin-bottom:10px;
+}
+.loop-moat-body {
+  font-family:var(--font-serif); font-size:18px; font-weight:300;
+  font-style:italic; line-height:1.55; color:#D4D8F0;
+}
+.loop-moat-body strong { font-style:normal; font-weight:500; color:#fff; }
+.loop-moat-body .loop-moat-tail { display:block; margin-top:10px; font-style:normal; font-family:var(--font-sans); font-size:13px; color:var(--slate-500); letter-spacing:.01em; }
 /* ── CTA ── */
 .cta-section { background:#0D0D22;padding:120px 24px; }
 .cta-h2 {
@@ -2221,38 +2298,85 @@ footer {
     </div>
   </div>
 </section>
-<!-- DOWNSTREAM LOOP -->
+<!-- DOWNSTREAM LOOP — bidirectional, per matrix v1_2 / positioning v2_23 (DEV-464) -->
 <section class="loop-section" id="loop">
   <div class="inner" style="text-align:center;">
     <div class="section-eyebrow" style="text-align:center;" data-reveal>🚀 The Two-Way Loop</div>
     <h2 class="section-h2" style="text-align:center;" data-reveal>
-      ⚡ The library is a byproduct.<br><em>Product behavior is the destination.</em>
+      ⚡ Two directions.<br><em>One library that compounds.</em>
     </h2>
-    <p class="section-lede" style="max-width:600px;margin:0 auto 0;" data-reveal>Rules don't stop at the library. They feed product specs. They govern AI agents. They become the control layer for every product decision downstream.</p>
+    <p class="section-lede" style="max-width:680px;margin:0 auto 0;" data-reveal>The library doesn&rsquo;t just collect what Jordan confirms — it pulls. Alex&rsquo;s query surfaces a gap, Jordan gets a live signal with context, the library grows. Supply meets demand. That&rsquo;s what makes it a loop.</p>
   </div>
-  <div class="loop-row" data-reveal>
-    <div class="loop-step">
-      <div class="ls-n">01</div>
-      <div class="ls-title">Ticket → Rule</div>
-      <div class="ls-body">Jordan confirms a rule from a real ticket. IF/THEN/BECAUSE. Attributed, versioned, structured.</div>
+
+  <!-- SUPPLY LANE (forward) -->
+  <div class="loop-lane" data-reveal>
+    <div class="loop-lane-label">
+      <span class="loop-lane-arrow">↓</span>
+      <span class="loop-lane-name">Supply · forward</span>
+      <span class="loop-lane-sub">— what Jordan confirms becomes product behavior</span>
     </div>
-    <div class="loop-step">
-      <div class="ls-n">02</div>
-      <div class="ls-title">Rule → Spec</div>
-      <div class="ls-body">Alex sees rule clusters. Each cluster becomes a Linear ticket. One rule, one spec, one feature — provenance chain intact.</div>
+    <div class="loop-row">
+      <div class="loop-step">
+        <div class="ls-n">01</div>
+        <div class="ls-title">Ticket → Rule</div>
+        <div class="ls-body">Jordan confirms a rule from a real ticket. IF/THEN/BECAUSE. Attributed, versioned, structured.</div>
+      </div>
+      <div class="loop-step">
+        <div class="ls-n">02</div>
+        <div class="ls-title">Rule → Spec</div>
+        <div class="ls-body">Alex sees rule clusters. Each cluster becomes a Linear ticket. One rule, one spec, one feature — provenance chain intact.</div>
+      </div>
+      <div class="loop-step">
+        <div class="ls-n">03</div>
+        <div class="ls-title">Spec → Product</div>
+        <div class="ls-body">Engineers build from Jordan&rsquo;s logic. The feature ships with the operational exception layer baked in from day one.</div>
+      </div>
+      <div class="loop-step">
+        <div class="ls-n">04</div>
+        <div class="ls-title">Rules → AI Control Layer</div>
+        <div class="ls-body">AI agents use your confirmed rules as the context and harness layer. They approve, route, and escalate based on your operational logic — not generic model defaults.</div>
+      </div>
     </div>
-    <div class="loop-step">
-      <div class="ls-n">03</div>
-      <div class="ls-title">Spec → Product</div>
-      <div class="ls-body">Engineers build from Jordan's logic. The feature ships with the operational exception layer baked in from day one.</div>
-    </div>
-    <div class="loop-step">
-      <div class="ls-n">04</div>
-      <div class="ls-title">Rules → AI Control Layer</div>
-      <div class="ls-body">AI agents use your confirmed rules as the context and harness layer. They approve, route, and escalate based on your operational logic — not generic model defaults.</div>
-    </div>
+    <div class="loop-path" data-reveal>ticket → rule → library → product specs + AI control layer</div>
   </div>
-  <div class="loop-path" data-reveal>ticket → rule → library → product specs + AI control layer</div>
+
+  <!-- LOOP CLOSE (justifies the word "loop" — DEV-464 AC #2) -->
+  <div class="loop-close" data-reveal>
+    <span class="loop-close-curve" aria-hidden="true">↻</span>
+    <span class="loop-close-label"><strong>The library closes the loop.</strong> Supply feeds product behavior; product behavior surfaces new demand the moment Alex queries the library and finds a gap.</span>
+  </div>
+
+  <!-- DEMAND-PULL LANE (backward) -->
+  <div class="loop-lane loop-lane--demand" data-reveal>
+    <div class="loop-lane-label">
+      <span class="loop-lane-arrow">↑</span>
+      <span class="loop-lane-name">Demand-pull · backward</span>
+      <span class="loop-lane-sub">— Alex&rsquo;s question is what makes Jordan write</span>
+    </div>
+    <div class="loop-row">
+      <div class="loop-step">
+        <div class="ls-n">A</div>
+        <div class="ls-title">Alex queries the library</div>
+        <div class="ls-body">Before speccing enterprise billing, Alex searches the rule library for what governs it. The query itself is the demand signal.</div>
+      </div>
+      <div class="loop-step">
+        <div class="ls-n">B</div>
+        <div class="ls-title">Library surfaces a gap</div>
+        <div class="ls-body">No matches. The gap is now structured context — not a 404. The system knows who to ask and why it matters.</div>
+      </div>
+      <div class="loop-step">
+        <div class="ls-n">C</div>
+        <div class="ls-title">Jordan gets a live signal</div>
+        <div class="ls-body">&ldquo;Alex needs your expertise on enterprise billing before sending to engineering.&rdquo; A live ask from a colleague — not a documentation reminder.</div>
+      </div>
+      <div class="loop-step">
+        <div class="ls-n">D</div>
+        <div class="ls-title">Library grows from demand</div>
+        <div class="ls-body">Jordan confirms the rule. Alex&rsquo;s next query gets answered. The next unanswered query becomes the next signal. The library grows from Alex&rsquo;s demand — not from Jordan&rsquo;s documentation obligation.</div>
+      </div>
+    </div>
+    <div class="loop-path" data-reveal>Alex query → library gap → Jordan signal → rule confirmed → library update</div>
+  </div>
 </section>
 <!-- CTA -->
 <section class="cta-section" id="cta">
@@ -2276,7 +2400,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">FieldRules.</div>
-  <div class="footer-mono">v9 · Pilot Prospect Page · March 2026</div>
+  <div class="footer-mono">v9.2 · Pilot Prospect Page · April 2026</div>
   <div class="footer-mono">Design Partner Program · 3–5 partners · Series A–B SaaS</div>
 </footer>
 <script>
